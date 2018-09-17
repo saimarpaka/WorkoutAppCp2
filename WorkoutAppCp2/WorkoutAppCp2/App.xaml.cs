@@ -9,9 +9,13 @@ namespace WorkoutAppCp2
     {
         public App()
         {
+           
+            LiveReload.Init();
+        
             InitializeComponent();
 
             MainPage = new SideBar();
+
         }
 
         protected override void OnStart()

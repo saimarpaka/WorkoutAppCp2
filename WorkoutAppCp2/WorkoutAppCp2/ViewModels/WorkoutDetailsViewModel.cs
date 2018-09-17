@@ -34,7 +34,7 @@ namespace WorkoutAppCp2.ViewModels
         }
         public void AddWeek()
         {           
-            _slWeeks.Add(new WeeksList { WeekNo = 1 });
+            _slWeeks.Add(new WeeksList { WeekNo = 1 });            
         }
         void FetchWorkoutDetails()
         {

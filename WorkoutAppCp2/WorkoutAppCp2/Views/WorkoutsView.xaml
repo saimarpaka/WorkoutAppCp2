@@ -4,19 +4,20 @@
              xmlns:local="clr-namespace:WorkoutAppCp2.Controls"
              x:Class="WorkoutAppCp2.Views.WorkoutsView">
     <ContentView.Content>
-        <Grid >            
+        
+        <Grid x:Name="gMainGrid">            
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
+                
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
+                
             </Grid.ColumnDefinitions>
-            <StackLayout x:Name="slWorkout" Grid.Row="1" Grid.ColumnSpan="2" Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" >
-                <local:CardView  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            
+                <local:CardView Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HasShadow="True">
                     <Grid >
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -26,28 +27,35 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
-                        <Label Text="Workout Name" Grid.Row="1" Grid.Column="0" VerticalTextAlignment ="Center" HorizontalOptions="FillAndExpand" />
+                        <Label Text="Workout Name" Grid.Row="0" Grid.Column="0" VerticalTextAlignment ="Center" HorizontalOptions="FillAndExpand" />
                         <Entry  Text="{Binding Workout_Name}" Placeholder="Workout Name"
                                HorizontalOptions="FillAndExpand"
                                  FontSize="Small"
-                               Grid.Row="1" Grid.Column="1"/>
-                        <Label Text="# of Weeks" Grid.Row="2" Grid.Column="0"  VerticalTextAlignment ="Center"  HorizontalOptions="FillAndExpand" />
+                               Grid.Row="0" Grid.Column="1"/>
+                        <Label Text="# of Weeks" Grid.Row="1" Grid.Column="0"  VerticalTextAlignment ="Center"  HorizontalOptions="FillAndExpand" />
                         <Entry x:Name="txtWeeks" Text="{Binding Week}"
                                Placeholder="Weeks"
                                Keyboard="Numeric"
                                HorizontalOptions="FillAndExpand"
                                FontSize="Small"
-                               Grid.Row="2" Grid.Column="1"/>
+                               Grid.Row="1" Grid.Column="1"/>
                         
                     </Grid>
                 </local:CardView>                        
                 
-            </StackLayout>
-            <ListView  HasUnevenRows="true" Grid.Row="2" Grid.ColumnSpan="2" SeparatorColor="Transparent" ItemsSource="{Binding slWeeks}" VerticalOptions="FillAndExpand">
+           
+            <ListView  x:Name="lvWeeks"
+                       HasUnevenRows="true"
+                       Grid.Row="1" Grid.ColumnSpan="2"
+                       SeparatorVisibility="None" 
+                       ItemsSource="{Binding slWeeks}"
+                       VerticalOptions="FillAndExpand"
+                       ItemAppearing="lvWeeks_ItemAppearing">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand">
+                                
                                 <Grid>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="Auto" />
@@ -58,17 +66,28 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <local:CardView Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" >
+                                    <local:CardView Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HasShadow="True" >
                                         <Label Text="{Binding WeekNo}" FontSize="Large" />
                                     </local:CardView>
-
+                            
                                 </Grid>
+                               
                             </local:BindableStackLayout>
-                        </ViewCell></DataTemplate></ListView.ItemTemplate>
-                
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Button x:Name="btnAddWeek"                            
+                            Text="Add Week" 
+                            HorizontalOptions="Start" 
+                            VerticalOptions="Center" 
+                            FontAttributes="Bold" 
+                            TextColor="White" 
+                            BackgroundColor="#5989B5" 
+                            Command="{Binding AddWeekCommand}" />
+                </ListView.Footer>
             </ListView>
-            <Button Text="Add Week" Grid.Row="3" Grid.Column="0"  HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding AddWeekCommand}" />
-        </Grid>
+            </Grid>
        
     </ContentView.Content>
 </ContentView>

@@ -6,8 +6,18 @@
     <ContentPage.Content>
         <StackLayout Padding="20" Spacing="12">
             <local:WorkoutsView/>
-            <Button Text="Update" BorderRadius="0" Margin="0,30,0,0" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding UpdateWorkoutCommand}" />
-            <Button Text="Delete" BorderRadius="0" Margin="0,30,0,0" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding DeleteWorkoutCommand}" />
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Button Text="Update" Grid.Row="0" Grid.Column="0" BorderRadius="0"  FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding UpdateWorkoutCommand}" />
+                <Button Text="Delete"  Grid.Row="0" Grid.Column="1" BorderRadius="0" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding DeleteWorkoutCommand}" />
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
