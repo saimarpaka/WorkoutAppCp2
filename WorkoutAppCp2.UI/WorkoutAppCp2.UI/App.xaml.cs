@@ -3,7 +3,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
-namespace WorkoutAppCp2
+namespace WorkoutAppCp2.UI
 {
     public partial class App : Application
     {
@@ -11,7 +11,7 @@ namespace WorkoutAppCp2
         {
             InitializeComponent();
 
-            MainPage = new SideBar();
+            MainPage = new MainPage();
         }
 
         protected override void OnStart()
