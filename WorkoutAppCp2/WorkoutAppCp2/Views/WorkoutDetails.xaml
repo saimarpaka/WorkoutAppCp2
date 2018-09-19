@@ -5,7 +5,7 @@
              x:Class="WorkoutAppCp2.Views.WorkoutDetails">
     <ContentPage.Content>
         <StackLayout Padding="20" Spacing="12">
-            <local:WorkoutsView/>
+            <local:WorkoutsViewCode/>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />

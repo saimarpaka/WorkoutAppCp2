@@ -2,7 +2,7 @@
 
 namespace WorkoutAppCp2.Controls
 {
-    class CardView : Frame
+    public class CardView : Frame
     { 
     }
 }

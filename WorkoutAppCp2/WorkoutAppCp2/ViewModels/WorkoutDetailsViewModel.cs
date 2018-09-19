@@ -14,7 +14,7 @@ namespace WorkoutAppCp2.ViewModels
     {
         public ICommand UpdateWorkoutCommand { get; private set; }
         public ICommand DeleteWorkoutCommand { get; private set; }
-        public ICommand AddWeekCommand { get; private set; }
+        
 
         public WorkoutDetailsViewModel(INavigation navigation, int selectedWorkoutId)
         {
@@ -28,13 +28,14 @@ namespace WorkoutAppCp2.ViewModels
             _slWeeks = new ObservableCollection<WeeksList>();
             UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
             DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
-            AddWeekCommand = new Command(() => AddWeek());
+            
 
             FetchWorkoutDetails();
         }
         public void AddWeek()
-        {           
-            _slWeeks.Add(new WeeksList { WeekNo = 1 });            
+        {
+            //_slWeeks.Add(new WeeksList { WeekNo = 1 });            
+            Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
         }
         void FetchWorkoutDetails()
         {
