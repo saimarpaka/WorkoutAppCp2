@@ -80,7 +80,7 @@ namespace WorkoutAppCp2.Views
 
             MainStackLayout = new BindableStackLayout();
             MainStackLayout.Spacing = 10;
-            MainStackLayout.Padding = 8;
+            MainStackLayout.Padding = 6;
             MainStackLayout.Children.Add(card);
             MainStackLayout.Children.Add(btnAddWeeks);
             sv = new ScrollView
@@ -151,6 +151,7 @@ namespace WorkoutAppCp2.Views
             cardStackLayout.Children.Add(new CardView { Content = NestedCard, BackgroundColor = Color.FromHex("#f2f4f5"), HasShadow = true });
             cardStackLayoutList.Add(cardStackLayout);
             cardStackLayout.Children.Add(gridDays);
+
             MainStackLayout.Children.Insert(MainStackLayout.Children.IndexOf(btnAddWeeks), new CardView { Content = cardStackLayout });
             sv.ScrollToAsync(btnAddWeeks, ScrollToPosition.End, false);
             cardGridDayCounters.Add(gridDays, 1);
@@ -199,6 +200,7 @@ namespace WorkoutAppCp2.Views
             NestedCard.Children.Add(gridButton);
             cardGridDayCounters[(Button)sender] += 1;
             cardStackLayoutList[buttonIndex].Children.Insert(cardStackLayoutList[buttonIndex].Children.IndexOf((Button)sender), new CardView { Content = NestedCard, BackgroundColor = Color.FromHex("#f2f4f5"), HasShadow = true });
+            sv.ScrollToAsync((Button)sender, ScrollToPosition.End, false);
         }
 
         private void GridButton_Clicked(object sender, System.EventArgs e)
