@@ -31,7 +31,7 @@
                 </Grid>
             </local:CardView>
 
-            <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" Items="{Binding slWeeks}">
+            <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" >
 
                 <Grid>
                     <Grid.RowDefinitions>

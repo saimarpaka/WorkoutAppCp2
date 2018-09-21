@@ -7,14 +7,15 @@ using Xamarin.Forms;
 
 namespace WorkoutAppCp2.Controls
 {
-    class BindableStackLayout : StackLayout
+    public class BindableStackLayout : StackLayout
     {
         public static readonly BindableProperty ItemsProperty =
         BindableProperty.Create(nameof(Items), typeof(ObservableCollection<View>), typeof(BindableStackLayout), null,
             propertyChanged: (b, o, n) =>
-            {
+            {                
                 (n as ObservableCollection<View>).CollectionChanged += (coll, arg) =>
                 {
+                    
                     switch (arg.Action)
                     {
                         case NotifyCollectionChangedAction.Add:

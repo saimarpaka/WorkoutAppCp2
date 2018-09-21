@@ -19,13 +19,17 @@ namespace WorkoutAppCp2.ViewModels
         public WorkoutDetailsViewModel(INavigation navigation, int selectedWorkoutId)
         {
             _navigation = navigation;
-            _workout = new Workouts();
-            _workout.Workout_id = selectedWorkoutId;
-            _workoutWeeks = new WorkoutWeeks();
-            _workoutWeeks.Workout_Id = selectedWorkoutId;
+            _workout = new Workouts
+            {
+                Workout_id = selectedWorkoutId
+            };
+            _workoutWeeks = new WorkoutWeeks
+            {
+                Workout_Id = selectedWorkoutId
+            };
             _workoutWeeksrepository = new WorkoutWeeksRepository();
             _workoutRepository = new WorkoutRepository();
-            _slWeeks = new ObservableCollection<WeeksList>();
+            _slWeeks = new ObservableCollection<View>();
             UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
             DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
             
@@ -33,8 +37,7 @@ namespace WorkoutAppCp2.ViewModels
             FetchWorkoutDetails();
         }
         public void AddWeek()
-        {
-            //_slWeeks.Add(new WeeksList { WeekNo = 1 });            
+        {               
             Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
         }
         void FetchWorkoutDetails()
@@ -44,12 +47,14 @@ namespace WorkoutAppCp2.ViewModels
         }
         async Task UpdateWorkout()
         {
-            bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
-            if (isUserAccept)
-            {
-                _workoutRepository.UpdateWorkout(_workout);
-                await _navigation.PopAsync();
-            }
+            //bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
+            //if (isUserAccept)
+            //{
+            //    _workoutRepository.UpdateWorkout(_workout);
+            //    await _navigation.PopAsync();
+            //}
+            _slWeeks.Add(new Label { Text = "hello" });
+            await Application.Current.MainPage.DisplayAlert("", "Count : "+_slWeeks.Count, "OK", "Cancel");
         }
         async Task DeleteWorkout()
         {

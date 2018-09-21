@@ -20,11 +20,11 @@ namespace WorkoutAppCp2.ViewModels
         public IWorkoutWeeksRepository _workoutWeeksrepository;
         public IWorkoutDaysRepository _workoutDaysRepository;
 
-        public ObservableCollection<WeeksList> _slWeeks;
+        public ObservableCollection<View> _slWeeks;
 
-        public ObservableCollection<WeeksList> slWeeks
+        public ObservableCollection<View> slWeeks
         {
-            get => _slWeeks;
+            get =>_slWeeks;
             set
             {
                 _slWeeks = value;
