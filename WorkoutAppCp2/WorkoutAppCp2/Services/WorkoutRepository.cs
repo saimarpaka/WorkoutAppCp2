@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkoutAppCp2.Helpers;
 using WorkoutAppCp2.Models;
 
 namespace WorkoutAppCp2.Services
 {
-    class WorkoutRepository : IWorkoutRepository
+    internal class WorkoutRepository : IWorkoutRepository
     {
-        DatabaseHelper _databaseHelper;
+        private DatabaseHelper _databaseHelper;
 
         public WorkoutRepository()
         {
@@ -28,7 +26,7 @@ namespace WorkoutAppCp2.Services
 
         public Task<Workouts> AddWorkout(Workouts workout)
         {
-           return _databaseHelper.AddWorkout(workout);
+            return _databaseHelper.AddWorkout(workout);
         }
 
         public void UpdateWorkout(Workouts workout)

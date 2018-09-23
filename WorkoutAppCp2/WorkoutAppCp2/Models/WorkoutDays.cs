@@ -1,7 +1,4 @@
 ﻿using SQLite;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace WorkoutAppCp2.Models
 {
@@ -11,9 +8,9 @@ namespace WorkoutAppCp2.Models
         public int Id { get; set; }
         public int Workout_Id { get; set; }
         public int Workout_Week_Id { get; set; }
-        public int Workout_Day_Id { get; set; }
-        public int Exercise_Id { get; set; }
-        public int Sets { get; set; }
-        public int Reps { get; set; }
+        public string Day { get; set; }
+        public string Exercise_Id { get; set; }
+        public string Sets { get; set; }
+        public string Reps { get; set; }
     }
 }

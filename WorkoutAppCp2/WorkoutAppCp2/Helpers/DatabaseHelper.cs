@@ -1,8 +1,5 @@
 ﻿using SQLite;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using WorkoutAppCp2.Models;
 using Xamarin.Forms;
@@ -11,7 +8,7 @@ namespace WorkoutAppCp2.Helpers
 {
     public class DatabaseHelper
     {
-        static SQLiteAsyncConnection sqliteconnection;
+        private static SQLiteAsyncConnection sqliteconnection;
         public const string DbFileName = "WorkoutApp.db";
 
         public DatabaseHelper()
@@ -31,6 +28,7 @@ namespace WorkoutAppCp2.Helpers
         {
             return sqliteconnection.Table<Workouts>().Where(t => t.Workout_id == id).FirstOrDefaultAsync();
         }
+
         public Task<Workouts> AddWorkout(Workouts workout)
         {
             sqliteconnection.InsertAsync(workout);
@@ -46,10 +44,12 @@ namespace WorkoutAppCp2.Helpers
         {
             return sqliteconnection.Table<WorkoutWeeks>().ToListAsync();
         }
+
         public Task<WorkoutWeeks> GetWorkoutWeek(int workout_Id)
         {
             return sqliteconnection.Table<WorkoutWeeks>().Where(t => t.Workout_Id == workout_Id).FirstOrDefaultAsync();
         }
+
         public void AddWorkoutWeek(WorkoutWeeks workoutWeek)
         {
             sqliteconnection.InsertAsync(workoutWeek);
@@ -64,12 +64,14 @@ namespace WorkoutAppCp2.Helpers
         {
             return sqliteconnection.Table<WorkoutDays>().ToListAsync();
         }
+
         public Task<WorkoutDays> GetWorkoutDay(int workout_Id, int workout_week_Id, int workout_Day_Id)
         {
             return sqliteconnection.Table<WorkoutDays>().Where(t => t.Workout_Id == workout_Id
                                                                 && t.Workout_Week_Id == workout_week_Id
-                                                                && t.Workout_Day_Id == workout_Day_Id).FirstOrDefaultAsync();
+                                                                && t.Id == workout_Day_Id).FirstOrDefaultAsync();
         }
+
         public void AddWorkoutDay(WorkoutDays workoutDay)
         {
             sqliteconnection.InsertAsync(workoutDay);
@@ -79,6 +81,5 @@ namespace WorkoutAppCp2.Helpers
         {
             sqliteconnection.UpdateAsync(workoutDay);
         }
-
     }
 }

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkoutAppCp2.Helpers;
 using WorkoutAppCp2.Models;
 
 namespace WorkoutAppCp2.Services
 {
-    class WorkoutWeeksRepository : IWorkoutWeeksRepository
+    internal class WorkoutWeeksRepository : IWorkoutWeeksRepository
     {
-        DatabaseHelper _databaseHelper;
+        private DatabaseHelper _databaseHelper;
 
         public WorkoutWeeksRepository()
         {

@@ -1,6 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Input;
 using WorkoutAppCp2.Controls;
+using WorkoutAppCp2.Models;
+using WorkoutAppCp2.ViewModels;
 using Xamarin.Forms;
 
 namespace WorkoutAppCp2.Views
@@ -33,7 +37,7 @@ namespace WorkoutAppCp2.Views
                 Spacing = 10,
                 Padding = 6
             };
-            MainStackLayout.SetBinding(BindableStackLayout.ItemsProperty, "slWeeks", BindingMode.TwoWay);
+
             grid = new Grid
             {
                 VerticalOptions = LayoutOptions.FillAndExpand,
@@ -87,8 +91,7 @@ namespace WorkoutAppCp2.Views
 
             MainStackLayout.Children.Add(card);
             MainStackLayout.Children.Add(btnAddWeeks);
-           
-            
+
             sv = new ScrollView
             {
                 Content = MainStackLayout
@@ -97,7 +100,7 @@ namespace WorkoutAppCp2.Views
             Content = sv;
         }
 
-        private Grid CreateCardGrid()
+        private Grid CreateCardGrid(string _weekCounter, string _dayCounter)
         {
             Grid cardGrid = new Grid
             {
@@ -113,17 +116,35 @@ namespace WorkoutAppCp2.Views
                     new ColumnDefinition { Width = GridLength.Star }
                 }
             };
+            var vm = BindingContext as WorkoutDetailsViewModel;
+            WeeksList wl = new WeeksList { Week = Convert.ToInt32(_weekCounter), Day = _dayCounter };
+            vm._slWeeks.Add(wl);
 
-            cardGrid.Children.Add(new Entry { Placeholder = "Exercise 1", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 0, 0);
-            cardGrid.Children.Add(new Entry { Placeholder = "Sets", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 1, 0);
-            cardGrid.Children.Add(new Entry { Placeholder = "Reps", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 2, 0);
+            Entry ExerciseEntry = new Entry { Placeholder = "Exercise 1", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+            Entry SetsEntry = new Entry { Placeholder = "Sets", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+            Entry RepsEntry = new Entry { Placeholder = "Reps", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+
+            ExerciseEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Exercise_Id");
+            SetsEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Sets");
+            RepsEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Reps");
+
+            Label weekEntry = new Label { Text = _weekCounter.ToString(), IsVisible = false };
+            Label dayEntry = new Label { Text = _dayCounter.ToString(), IsVisible = false };
+
+            cardGrid.Children.Add(ExerciseEntry, 0, 0);
+            cardGrid.Children.Add(SetsEntry, 1, 0);
+            cardGrid.Children.Add(RepsEntry, 2, 0);
+
+            cardGrid.Children.Add(weekEntry);
+
+            cardGrid.Children.Add(dayEntry);
 
             return cardGrid;
         }
 
         private void BtnAddWeeks_Clicked(object sender, System.EventArgs e)
         {
-            Grid cardGrid = CreateCardGrid();
+            Grid cardGrid = CreateCardGrid((WeekCounter).ToString(), DayCounter.ToString());
             Button gridButton = new Button
             {
                 Text = "Add",
@@ -152,7 +173,6 @@ namespace WorkoutAppCp2.Views
             gridDays.Clicked += GridDays_Clicked;
             nestedGridDaysButtonList.Add(gridDays);
             cardGridButtonsList.Add(gridButton);
-            cardGridList.Add(cardGrid);
 
             StackLayout NestedCard = new StackLayout();
             NestedCard.Children.Add(new Label { Text = "Day 1", FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) });
@@ -160,7 +180,10 @@ namespace WorkoutAppCp2.Views
             NestedCard.Children.Add(gridButton);
 
             StackLayout cardStackLayout = new StackLayout();
-            cardStackLayout.Children.Add(new Label { Text = "Week " + WeekCounter, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) });
+            Label WeekLabel = new Label { Text = "Week " + WeekCounter, FontSize = Device.GetNamedSize(NamedSize.Medium, typeof(Label)) };
+
+            cardGridList.Add(cardGrid);
+            cardStackLayout.Children.Add(WeekLabel);
             cardStackLayout.Children.Add(new CardView { Content = NestedCard, BackgroundColor = Color.FromHex("#f2f4f5"), HasShadow = true });
             cardStackLayoutList.Add(cardStackLayout);
             cardStackLayout.Children.Add(gridDays);
@@ -175,7 +198,11 @@ namespace WorkoutAppCp2.Views
         {
             int buttonIndex = nestedGridDaysButtonList.IndexOf((Button)sender);
             StackLayout NestedCard = new StackLayout();
-            Grid cardGrid = CreateCardGrid();
+            var tWeekLbl = cardStackLayoutList[buttonIndex].Children.First().GetType();
+            Label WeekLabel = null;
+            WeekLabel = (Label)cardStackLayoutList[buttonIndex].Children.First();
+
+            Grid cardGrid = CreateCardGrid(WeekLabel.Text[WeekLabel.Text.Length - 1].ToString(), (cardGridDayCounters[(Button)sender] + 1).ToString());
             Button gridButton = new Button
             {
                 Text = "Add",
@@ -203,6 +230,10 @@ namespace WorkoutAppCp2.Views
         private void GridButton_Clicked(object sender, System.EventArgs e)
         {
             int buttonIndex = cardGridButtonsList.IndexOf((Button)sender);
+            var gridWeek = cardGridList[buttonIndex].Children[3];
+            var week = (Label)gridWeek;
+            var gridDay = cardGridList[buttonIndex].Children[4];
+            var day = (Label)gridDay;
 
             int currentRowCount;
             if (cardGridCounters.ContainsKey(buttonIndex))
@@ -215,11 +246,22 @@ namespace WorkoutAppCp2.Views
                 currentRowCount = 1;
                 cardGridCounters.Add(buttonIndex, currentRowCount);
             }
-            CardView c = new CardView();
 
-            cardGridList[buttonIndex].Children.Add(new Entry { Placeholder = "Exercise " + (currentRowCount + 1), FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 0, currentRowCount);
-            cardGridList[buttonIndex].Children.Add(new Entry { Placeholder = "Sets ", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 1, currentRowCount);
-            cardGridList[buttonIndex].Children.Add(new Entry { Placeholder = "Reps ", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) }, 2, currentRowCount);
+            var vm = BindingContext as WorkoutDetailsViewModel;
+            WeeksList wl = new WeeksList { Week = Convert.ToInt32(week.Text), Day = day.Text };
+            vm._slWeeks.Add(wl);
+
+            Entry ExerciseEntry = new Entry { Placeholder = "Exercise " + (currentRowCount + 1), FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+            Entry SetsEntry = new Entry { Placeholder = "Sets ", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+            Entry RepsEntry = new Entry { Placeholder = "Reps ", FontSize = Device.GetNamedSize(NamedSize.Small, typeof(Label)) };
+
+            ExerciseEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Exercise_Id");
+            SetsEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Sets");
+            RepsEntry.SetBinding(Entry.TextProperty, "SlWeeks[" + vm._slWeeks.IndexOf(wl) + "].Reps");
+
+            cardGridList[buttonIndex].Children.Add(ExerciseEntry, 0, currentRowCount);
+            cardGridList[buttonIndex].Children.Add(SetsEntry, 1, currentRowCount);
+            cardGridList[buttonIndex].Children.Add(RepsEntry, 2, currentRowCount);
         }
     }
 }

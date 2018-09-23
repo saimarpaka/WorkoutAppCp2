@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Text;
+﻿using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
@@ -10,11 +7,10 @@ using Xamarin.Forms;
 
 namespace WorkoutAppCp2.ViewModels
 {
-    class WorkoutDetailsViewModel : BaseWorkoutsViewModel
+    internal class WorkoutDetailsViewModel : BaseWorkoutsViewModel
     {
         public ICommand UpdateWorkoutCommand { get; private set; }
         public ICommand DeleteWorkoutCommand { get; private set; }
-        
 
         public WorkoutDetailsViewModel(INavigation navigation, int selectedWorkoutId)
         {
@@ -29,23 +25,26 @@ namespace WorkoutAppCp2.ViewModels
             };
             _workoutWeeksrepository = new WorkoutWeeksRepository();
             _workoutRepository = new WorkoutRepository();
-            _slWeeks = new ObservableCollection<View>();
+           
+            _slWeeks = new ObservableCollection<WeeksList>();
             UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
             DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
-            
 
             FetchWorkoutDetails();
         }
+
         public void AddWeek()
-        {               
+        {
             Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
         }
-        void FetchWorkoutDetails()
+
+        private void FetchWorkoutDetails()
         {
             _workout = _workoutRepository.GetWorkout(_workout.Workout_id).Result;
             _workoutWeeks = _workoutWeeksrepository.GetWorkoutWeek(_workout.Workout_id).Result;
         }
-        async Task UpdateWorkout()
+
+        private async Task UpdateWorkout()
         {
             //bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
             //if (isUserAccept)
@@ -53,18 +52,24 @@ namespace WorkoutAppCp2.ViewModels
             //    _workoutRepository.UpdateWorkout(_workout);
             //    await _navigation.PopAsync();
             //}
-            _slWeeks.Add(new Label { Text = "hello" });
-            await Application.Current.MainPage.DisplayAlert("", "Count : "+_slWeeks.Count, "OK", "Cancel");
+
+           
+            _workoutDaysRepository = new WorkoutDaysRepository();
+            foreach(var item in _slWeeks)
+            {               
+                _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item.Day, Exercise_Id = item.Exercise_Id, Reps = item.Reps, Sets = item.Sets, Workout_Id = _workout.Workout_id });
+            }
+            await Application.Current.MainPage.DisplayAlert("", "Count : " + _slWeeks.Count, "OK", "Cancel");
         }
-        async Task DeleteWorkout()
+
+        private async Task DeleteWorkout()
         {
             bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Delete Workout Details?", "OK", "Cancel");
             if (isUserAccept)
             {
-             //   _workoutRepository.DeleteWorkout(_workout.Workout_id);
+                //   _workoutRepository.DeleteWorkout(_workout.Workout_id);
                 await _navigation.PopAsync();
             }
         }
     }
 }
-

@@ -5,6 +5,7 @@
              x:Class="WorkoutAppCp2.Views.WorkoutsView">
     <ContentView.Content>
 
+        <StackLayout>
         <StackLayout Spacing="{DynamicResource CardSpacing}" Padding="{DynamicResource CardSpacing}">
             <local:CardView HorizontalOptions="FillAndExpand" VerticalOptions="Start" HasShadow="True">
                 <Grid>
@@ -20,18 +21,11 @@
                     <Entry  Text="{Binding Workout_Name}" Placeholder="Workout Name"
                                HorizontalOptions="FillAndExpand"
                                  FontSize="Small"
-                               Grid.Row="0" Grid.Column="1" />
-                    <Label Text="# of Weeks" Grid.Row="1" Grid.Column="0"  VerticalTextAlignment ="Center"  HorizontalOptions="FillAndExpand" />
-                    <Entry x:Name="txtWeeks" Text="{Binding Week}"
-                               Placeholder="Weeks"
-                               Keyboard="Numeric"
-                               HorizontalOptions="FillAndExpand"
-                               FontSize="Small"
-                               Grid.Row="1" Grid.Column="1" />
+                               Grid.Row="0" Grid.Column="1" />                   
                 </Grid>
             </local:CardView>
-
-            <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" >
+        </StackLayout>
+        <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" >
 
                 <Grid>
                     <Grid.RowDefinitions>

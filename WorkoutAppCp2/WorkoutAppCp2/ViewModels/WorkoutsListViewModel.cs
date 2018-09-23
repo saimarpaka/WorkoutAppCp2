@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
 using WorkoutAppCp2.ViewModels;
@@ -10,7 +7,7 @@ using Xamarin.Forms;
 
 namespace WorkoutAppCp2.Services
 {
-    class WorkoutsListViewModel : BaseWorkoutsViewModel
+    internal class WorkoutsListViewModel : BaseWorkoutsViewModel
     {
         public ICommand AddNewWorkoutCommand { get; private set; }
         public ICommand DeleteAllWorkoutsCommand { get; private set; }
@@ -23,15 +20,18 @@ namespace WorkoutAppCp2.Services
             DeleteAllWorkoutsCommand = new Command(async () => await DeleteAllWorkouts());
             FetchWorkouts();
         }
-        void FetchWorkouts()
+
+        private void FetchWorkouts()
         {
             WorkoutsList = _workoutRepository.GetAllWorkouts().Result;
         }
-        async Task ShowAddWorkout()
+
+        private async Task ShowAddWorkout()
         {
             await _navigation.PushAsync(new AddWorkout());
         }
-        async Task DeleteAllWorkouts()
+
+        private async Task DeleteAllWorkouts()
         {
             bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workouts List", "Delete All Workouts ?", "OK", "Cancel");
 
@@ -39,10 +39,10 @@ namespace WorkoutAppCp2.Services
             {
                 await _navigation.PushAsync(new AddWorkout());
             }
-
         }
 
-        Workouts _SelectedWorkout;
+        private Workouts _SelectedWorkout;
+
         public Workouts SelectedWorkout
         {
             get { return _SelectedWorkout; }
@@ -57,10 +57,9 @@ namespace WorkoutAppCp2.Services
             }
         }
 
-        async void ShowWorkoutDetails(int Workout_id)
+        private async void ShowWorkoutDetails(int Workout_id)
         {
             await _navigation.PushAsync(new WorkoutDetails(Workout_id));
         }
-
     }
 }

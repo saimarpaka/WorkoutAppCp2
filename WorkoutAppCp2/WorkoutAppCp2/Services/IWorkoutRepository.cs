@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using WorkoutAppCp2.Models;
 
 namespace WorkoutAppCp2.Services
 {
-    interface IWorkoutRepository
+    internal interface IWorkoutRepository
     {
         Task<List<Workouts>> GetAllWorkouts();
 
