@@ -16,10 +16,8 @@ namespace WorkoutAppCp2.ViewModels
         {
             _navigation = navigation;
             _workout = new Workouts();
-            _workoutWeeks = new WorkoutWeeks();
 
             _workoutRepository = new WorkoutRepository();
-            _workoutWeeksrepository = new WorkoutWeeksRepository();
 
             AddWorkoutCommand = new Command(async () => await AddWorkout());
             ViewAllWorkoutsCommand = new Command(async () => await ShowWorkoutsList());
@@ -31,8 +29,6 @@ namespace WorkoutAppCp2.ViewModels
             if (isUserAccept)
             {
                 Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
-                _workoutWeeks.Workout_Id = oLastWorkout.Workout_id;
-                _workoutWeeksrepository.AddWorkoutWeek(_workoutWeeks);
                 await _navigation.PushAsync(new WorkoutsList());
             }
         }

@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:WorkoutAppCp2.Views">
     <ContentPage.Content>
         <StackLayout>
-            <local:WorkoutsView/>
+            <local:WorkoutsViewCode/>
             <Button x:Name="SubmitButton" Command="{Binding AddWorkoutCommand}" BorderRadius="0" Text="Save Workout" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5"/>
             <Label Text="View All Workouts" IsVisible="{Binding IsViewAll}" x:Name="ViewLbl" TextColor="Black" HorizontalOptions="EndAndExpand" FontSize="15">
                 <Label.GestureRecognizers>
