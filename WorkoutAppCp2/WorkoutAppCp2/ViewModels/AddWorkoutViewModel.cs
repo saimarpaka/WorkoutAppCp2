@@ -29,13 +29,13 @@ namespace WorkoutAppCp2.ViewModels
             if (isUserAccept)
             {
                 Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
-                await _navigation.PushAsync(new WorkoutsList());
+                await _navigation.PopAsync();
             }
         }
 
         private async Task ShowWorkoutsList()
         {
-            await _navigation.PushAsync(new WorkoutsList());
+            await _navigation.PopAsync();
         }
     }
 }
