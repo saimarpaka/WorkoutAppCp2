@@ -1,8 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
 using WorkoutAppCp2.Services;
-using WorkoutAppCp2.Views;
 using Xamarin.Forms;
 
 namespace WorkoutAppCp2.ViewModels
@@ -18,19 +18,26 @@ namespace WorkoutAppCp2.ViewModels
             _workout = new Workouts();
 
             _workoutRepository = new WorkoutRepository();
-
+            _slWeeks = new ObservableCollection<WeeksList>();
             AddWorkoutCommand = new Command(async () => await AddWorkout());
             ViewAllWorkoutsCommand = new Command(async () => await ShowWorkoutsList());
         }
 
+        private async Task UpdateWorkout()
+        {
+            await _navigation.PopAsync();
+        }
+
         private async Task AddWorkout()
         {
-            bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Add Workout", "Do you want to save Workout Details ?", "OK", "Cancel");
-            if (isUserAccept)
+            _workoutDaysRepository = new WorkoutDaysRepository();
+            Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
+            foreach (var item in _slWeeks)
             {
-                Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
-                await _navigation.PopAsync();
+                _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item.Day, Exercise_Id = item.Exercise_Id, Reps = item.Reps, Sets = item.Sets, Workout_Id = oLastWorkout.Workout_id });
             }
+
+            await _navigation.PopAsync();
         }
 
         private async Task ShowWorkoutsList()

@@ -1,56 +1,24 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:local="clr-namespace:WorkoutAppCp2.Controls"
+            
+             xmlns:customcontrols="clr-namespace:Xamarin.CustomControls;assembly=Xamarin.CustomControls.RepeaterView"
              x:Class="WorkoutAppCp2.Views.WorkoutsView">
-    <ContentView.Content>
-
-        <StackLayout>
-        <StackLayout Spacing="{DynamicResource CardSpacing}" Padding="{DynamicResource CardSpacing}">
-            <local:CardView HorizontalOptions="FillAndExpand" VerticalOptions="Start" HasShadow="True">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-                    <Label Text="Workout Name" Grid.Row="0" Grid.Column="0" VerticalTextAlignment ="Center" HorizontalOptions="FillAndExpand" />
-                    <Entry  Text="{Binding Workout_Name}" Placeholder="Workout Name"
-                               HorizontalOptions="FillAndExpand"
-                                 FontSize="Small"
-                               Grid.Row="0" Grid.Column="1" />                   
-                </Grid>
-            </local:CardView>
-        </StackLayout>
-        <local:BindableStackLayout  Spacing="{DynamicResource CardSpacing}" VerticalOptions="FillAndExpand" >
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <local:CardView Grid.Row="0" Grid.ColumnSpan="2" HorizontalOptions="FillAndExpand" VerticalOptions="Start" HasShadow="True">
-                        <Label Text="{Binding WeekNo}" FontSize="Large" />
-                    </local:CardView>
-                </Grid>
-            </local:BindableStackLayout>
-
-            <Button x:Name="btnAddWeek"
-                            Text="Add Week"
-                            HorizontalOptions="Start"
-                            VerticalOptions="Center"
-                            FontAttributes="Bold"
-                            TextColor="White"
-                            BackgroundColor="#5989B5"
-                            Command="{Binding AddWeekCommand}" />
-        </StackLayout>
-    </ContentView.Content>
-</ContentView>
+    <ContentPage.Content>
+        <ScrollView>
+            <StackLayout>
+                <customcontrols:RepeaterView
+                ItemsSource="{Binding NamesList}">
+                    <customcontrols:RepeaterView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Label Text="{Binding Day}"></Label>
+                            </ViewCell>
+                        </DataTemplate>
+                    </customcontrols:RepeaterView.ItemTemplate>
+                </customcontrols:RepeaterView>
+                <Button Text=" Click me" Command="{Binding AddCommand}"></Button>
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

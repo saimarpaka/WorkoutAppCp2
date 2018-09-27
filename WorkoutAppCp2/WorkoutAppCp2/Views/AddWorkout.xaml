@@ -5,9 +5,8 @@
              xmlns:local="clr-namespace:WorkoutAppCp2.Views">
     <ContentPage.Content>
         <StackLayout>
-            <local:WorkoutsViewCode />
+            <local:AddWorkoutCode />
 
-            
             <StackLayout>
                 <StackLayout Padding="6,0,6,0">
                     <Button x:Name="SubmitButton" Command="{Binding AddWorkoutCommand}"  BorderRadius="0" Text="Save Workout" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" />

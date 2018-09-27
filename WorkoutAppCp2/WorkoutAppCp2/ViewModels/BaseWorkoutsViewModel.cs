@@ -17,9 +17,18 @@ namespace WorkoutAppCp2.ViewModels
         public IWorkoutRepository _workoutRepository;
         public IWorkoutWeeksRepository _workoutWeeksrepository;
         public IWorkoutDaysRepository _workoutDaysRepository;
-
+        public List<WeeksList> _namesList;
         public ObservableCollection<WeeksList> _slWeeks;
 
+        public List<WeeksList> NamesList
+        {
+            get => _namesList;
+            set
+            {
+                _namesList = value;
+                NotifyPropertyChanged("NamesList");
+            }
+        }
         public ObservableCollection<WeeksList> SlWeeks
         {
             get => _slWeeks;

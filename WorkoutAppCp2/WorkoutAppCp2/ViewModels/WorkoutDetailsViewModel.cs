@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
@@ -11,6 +12,7 @@ namespace WorkoutAppCp2.ViewModels
     {
         public ICommand UpdateWorkoutCommand { get; private set; }
         public ICommand DeleteWorkoutCommand { get; private set; }
+        public ICommand AddCommand { get; private set; }
 
         public WorkoutDetailsViewModel(INavigation navigation, int selectedWorkoutId)
         {
@@ -25,9 +27,20 @@ namespace WorkoutAppCp2.ViewModels
 
             _slWeeks = new ObservableCollection<WeeksList>();
             UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
-            DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
-
+            DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());            
             FetchWorkoutDetails();
+        }
+        public WorkoutDetailsViewModel()
+        {
+            _namesList = new List<WeeksList>();
+            AddCommand = new Command(async () => await Add());
+        }
+        //test code
+        private async Task Add()
+        {
+            _namesList.Add(new WeeksList { Day = "1" });
+
+            await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
         }
 
         public void AddWeek()
@@ -42,19 +55,12 @@ namespace WorkoutAppCp2.ViewModels
 
         private async Task UpdateWorkout()
         {
-            //bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
-            //if (isUserAccept)
-            //{
-            //    _workoutRepository.UpdateWorkout(_workout);
-            //    await _navigation.PopAsync();
-            //}
-
             _workoutDaysRepository = new WorkoutDaysRepository();
             foreach (var item in _slWeeks)
             {
                 _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item.Day, Exercise_Id = item.Exercise_Id, Reps = item.Reps, Sets = item.Sets, Workout_Id = _workout.Workout_id });
             }
-            await Application.Current.MainPage.DisplayAlert("", "Count : " + _slWeeks.Count, "OK", "Cancel");
+            await _navigation.PopAsync();
         }
 
         private async Task DeleteWorkout()

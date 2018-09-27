@@ -34,7 +34,7 @@ namespace WorkoutAppCp2
                 MenuItems = new ObservableCollection<SideBarMenuItem>(new[]
                 {
                     new SideBarMenuItem { Id = 0, Title = "Workouts" , TargetType = typeof(WorkoutsList)},
-                    new SideBarMenuItem { Id = 1, Title = "Workout Editor", TargetType = typeof(SideBarDetail)}
+                    new SideBarMenuItem { Id = 1, Title = "Workout Editor", TargetType = typeof(WorkoutsView)}
                 });
             }
             

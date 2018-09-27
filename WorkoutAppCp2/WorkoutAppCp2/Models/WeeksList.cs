@@ -2,7 +2,7 @@
 
 namespace WorkoutAppCp2.Models
 {
-    internal class WeeksList
+    public class WeeksList
     {
         public int Week { get; set; }
         public List<Days> days { get; set; }
