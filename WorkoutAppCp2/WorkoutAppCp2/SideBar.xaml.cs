@@ -20,8 +20,7 @@ namespace WorkoutAppCp2
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var item = e.SelectedItem as SideBarMenuItem;
-            if (item == null)
+            if (!(e.SelectedItem is SideBarMenuItem item))
                 return;
 
             var page = (Page)Activator.CreateInstance(item.TargetType);

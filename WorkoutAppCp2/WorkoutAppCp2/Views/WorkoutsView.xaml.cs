@@ -5,17 +5,26 @@ using Xamarin.Forms.Xaml;
 namespace WorkoutAppCp2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class WorkoutsView : ContentPage
+    public partial class WorkoutsView : ContentView
     {
         public WorkoutsView()
         {
-            InitializeComponent();
-            BindingContext = new WorkoutDetailsViewModel();
-            MessagingCenter.Subscribe<Button,string>("Scroll","ScrollTo" ,(sender, arg) =>
+            InitializeComponent();            
+            MessagingCenter.Subscribe<string,string>("Scroll","ScrollTo" ,(sender, arg) =>
             {
-                sv.FadeTo(1, 200, Easing.CubicIn);
-                sv.ScrollToAsync(sender, 0, false);
+               switch(arg)
+                {
+                    case "AddWeek":
+                        ScrollTo(btnAddWeek);
+                        break;
+                }
+
             });
+        }
+        private void ScrollTo(Button sender)
+        {
+            sv.FadeTo(1, 200, Easing.CubicIn);
+            sv.ScrollToAsync(sender, 0, false);
         }
     }
 }

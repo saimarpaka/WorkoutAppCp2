@@ -1,4 +1,4 @@
-﻿using System.Collections.ObjectModel;
+﻿using MvvmHelpers;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
@@ -11,6 +11,9 @@ namespace WorkoutAppCp2.ViewModels
     {
         public ICommand AddWorkoutCommand { get; private set; }
         public ICommand ViewAllWorkoutsCommand { get; private set; }
+        public ICommand AddCommand { get; private set; }
+        public ICommand AddDayCommand { get; private set; }
+        public ICommand AddExerciseCommand { get; private set; }
 
         public AddWorkoutViewModel(INavigation navigation)
         {
@@ -18,9 +21,37 @@ namespace WorkoutAppCp2.ViewModels
             _workout = new Workouts();
 
             _workoutRepository = new WorkoutRepository();
-            _slWeeks = new ObservableCollection<WeeksList>();
+            _weeksList = new ObservableRangeCollection<WeeksList>();
+
             AddWorkoutCommand = new Command(async () => await AddWorkout());
             ViewAllWorkoutsCommand = new Command(async () => await ShowWorkoutsList());
+            AddCommand = new Command(() => Add());
+            AddDayCommand = new Command<WeeksList>((model) => AddDay(model));
+            AddExerciseCommand = new Command<Days>((model) => AddExercise(model));
+        }
+
+        private void AddExercise(Days day)
+        {
+            day.exercisesOnDays.Add(new ExercisesOnDay());
+        }
+
+        private void AddDay(WeeksList week)
+        {
+            ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
+            week.days.Add(new Days { Day = week.days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
+        }
+
+        private void Add()
+        {
+            ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
+            ObservableRangeCollection<Days> ds = new ObservableRangeCollection<Days>
+            {
+                new Days { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } },
+                new Days { Day = 2, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } },
+                new Days { Day = 3, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } }
+            };
+            _weeksList.Add(new WeeksList { Week = _weeksList.Count + 1, days = ds });
+            MessagingCenter.Send("Scroll", "ScrollTo", "AddWeek");
         }
 
         private async Task UpdateWorkout()
@@ -32,9 +63,13 @@ namespace WorkoutAppCp2.ViewModels
         {
             _workoutDaysRepository = new WorkoutDaysRepository();
             Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
-            foreach (var item in _slWeeks)
+            foreach (var item in _weeksList)
             {
-                _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item.Day, Exercise_Id = item.Exercise_Id, Reps = item.Reps, Sets = item.Sets, Workout_Id = oLastWorkout.Workout_id });
+                var weekid = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week }).Result;
+                foreach(var item2 in item.days)
+                {
+                    
+                }
             }
 
             await _navigation.PopAsync();

@@ -1,12 +1,21 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:controls="clr-namespace:WorkoutAppCp2.Controls"
              x:Class="WorkoutAppCp2.Views.WorkoutsView"
              x:Name="RootPage">
-    <ContentPage.Content>
+    <ContentView.Content>
         <ScrollView x:Name="sv">
+
             <StackLayout>
+                <StackLayout Spacing="10" Padding="6">
+                    <controls:CardView HasShadow="True">
+                        <Grid>
+                            <Label Grid.Row="0" Grid.Column="0" Text="Workout Name" VerticalTextAlignment="Center" HorizontalOptions="Start"></Label>
+                            <Entry Text="{Binding Workout_Name}" HorizontalOptions="End" Grid.Row="0" Grid.Column="1" Placeholder="Workout Name"></Entry>
+                        </Grid>
+                    </controls:CardView>
+                </StackLayout>
                 <controls:RepeaterView ItemsSource="{Binding NamesList}" Spacing="10" Padding="6">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
@@ -38,7 +47,7 @@
                                                                     </controls:RepeaterView.ItemTemplate>
                                                                 </controls:RepeaterView>
 
-                                                                <Button Text="Add" Command="{Binding Path=BindingContext.AddExerciseCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}" WidthRequest="50" HeightRequest="40"
+                                                                <Button x:Name="btnAddExercise"  Text="Add" Command="{Binding Path=BindingContext.AddExerciseCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}" WidthRequest="50" HeightRequest="40"
                                                                         FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
                                                             </StackLayout>
                                                         </controls:CardView>
@@ -47,7 +56,7 @@
                                             </controls:RepeaterView.ItemTemplate>
                                         </controls:RepeaterView>
 
-                                        <Button Text="Add" Command="{Binding Path=BindingContext.AddDayCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}"  WidthRequest="50" HeightRequest="40"
+                                        <Button x:Name="btnAddDay" Text="Add" Command="{Binding Path=BindingContext.AddDayCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}"  WidthRequest="50" HeightRequest="40"
                                                                         FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
                                     </StackLayout>
                                 </controls:CardView>
@@ -56,10 +65,10 @@
                     </controls:RepeaterView.ItemTemplate>
                 </controls:RepeaterView>
                 <StackLayout Padding="6,6,6,6">
-                    <Button Text="Add" Command="{Binding AddCommand}"  WidthRequest="70" HeightRequest="50"
+                    <Button x:Name="btnAddWeek" Text="Add" Command="{Binding AddCommand}"  WidthRequest="70" HeightRequest="30"
                                                                         FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
                 </StackLayout>
             </StackLayout>
         </ScrollView>
-    </ContentPage.Content>
-</ContentPage>
+    </ContentView.Content>
+</ContentView>

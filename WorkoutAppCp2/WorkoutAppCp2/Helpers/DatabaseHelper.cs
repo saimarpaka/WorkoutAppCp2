@@ -50,9 +50,10 @@ namespace WorkoutAppCp2.Helpers
             return sqliteconnection.Table<WorkoutWeeks>().Where(t => t.Workout_Id == workout_Id).FirstOrDefaultAsync();
         }
 
-        public void AddWorkoutWeek(WorkoutWeeks workoutWeek)
+        public Task<WorkoutWeeks> AddWorkoutWeek(WorkoutWeeks workoutWeek)
         {
             sqliteconnection.InsertAsync(workoutWeek);
+            return sqliteconnection.Table<WorkoutWeeks>().OrderByDescending(t => t.Id).FirstOrDefaultAsync();
         }
 
         public void UpdateWorkoutWeek(WorkoutWeeks workoutWeek)

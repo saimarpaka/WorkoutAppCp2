@@ -10,7 +10,7 @@ namespace WorkoutAppCp2.Services
 
         Task<WorkoutWeeks> GetWorkoutWeek(int workout_Id);
 
-        void AddWorkoutWeek(WorkoutWeeks workoutWeek);
+        Task<WorkoutWeeks> AddWorkoutWeek(WorkoutWeeks workoutWeek);
 
         void UpdateWorkoutWeek(WorkoutWeeks workoutWeek);
     }

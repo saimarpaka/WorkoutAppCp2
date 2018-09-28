@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:WorkoutAppCp2.Views">
     <ContentPage.Content>
         <StackLayout>
-            <local:AddWorkoutCode />
+            <local:WorkoutsView></local:WorkoutsView>
 
             <StackLayout>
                 <StackLayout Padding="6,0,6,0">

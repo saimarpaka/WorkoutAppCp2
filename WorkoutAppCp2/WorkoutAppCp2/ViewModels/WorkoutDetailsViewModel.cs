@@ -35,7 +35,7 @@ namespace WorkoutAppCp2.ViewModels
 
         public WorkoutDetailsViewModel()
         {
-            _namesList = new ObservableRangeCollection<WeeksList>();
+            _weeksList = new ObservableRangeCollection<WeeksList>();
             AddCommand = new Command(() => Add());
             AddDayCommand = new Command<WeeksList>((model) => AddDay(model));
             AddExerciseCommand = new Command<Days>((model) => AddExercise(model));
@@ -43,25 +43,27 @@ namespace WorkoutAppCp2.ViewModels
 
         private void AddExercise(Days day)
         {
-            day.exercisesOnDays.Add(new ExercisesOnDay {  });
+            day.exercisesOnDays.Add(new ExercisesOnDay());
         }
 
         private void AddDay(WeeksList week)
         {
             ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
-            week.days.Add(new Days { Day = week.days.Count+1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay} });
+            week.days.Add(new Days { Day = week.days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
         }
 
         //test code
         private void Add()
         {
             ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
-            ObservableRangeCollection<Days> ds = new ObservableRangeCollection<Days>();
-            ds.Add(new Days { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
-            ds.Add(new Days { Day = 2, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
-            ds.Add(new Days { Day = 3, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
-            _namesList.Add(new WeeksList {Week = _namesList.Count+1, days = ds });
-            
+            ObservableRangeCollection<Days> ds = new ObservableRangeCollection<Days>
+            {
+                new Days { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } },
+                new Days { Day = 2, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } },
+                new Days { Day = 3, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } }
+            };
+            _weeksList.Add(new WeeksList { Week = _weeksList.Count + 1, days = ds });
+            MessagingCenter.Send("Scroll", "ScrollTo", "AddWeek");
         }
 
         public void AddWeek()
