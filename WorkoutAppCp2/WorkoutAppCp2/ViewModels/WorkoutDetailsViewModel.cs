@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MvvmHelpers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -13,6 +14,7 @@ namespace WorkoutAppCp2.ViewModels
         public ICommand UpdateWorkoutCommand { get; private set; }
         public ICommand DeleteWorkoutCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
+        public ICommand AddDayCommand { get; private set; }
 
         public WorkoutDetailsViewModel(INavigation navigation, int selectedWorkoutId)
         {
@@ -27,20 +29,30 @@ namespace WorkoutAppCp2.ViewModels
 
             _slWeeks = new ObservableCollection<WeeksList>();
             UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
-            DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());            
+            DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
             FetchWorkoutDetails();
         }
+
         public WorkoutDetailsViewModel()
         {
-            _namesList = new List<WeeksList>();
-            AddCommand = new Command(async () => await Add());
+            _namesList = new ObservableRangeCollection<WeeksList>();
+            AddCommand = new Command(() => Add());
+            AddDayCommand = new Command<WeeksList>((model) => AddDay(model));
         }
-        //test code
-        private async Task Add()
-        {
-            _namesList.Add(new WeeksList { Day = "1" });
 
-            await Application.Current.MainPage.DisplayAlert("Workout Details", "Update Workout Details?", "OK", "Cancel");
+        private void AddDay(WeeksList week)
+        {
+            week.days.Add(new Days { Day = 4 });               
+        }
+
+        //test code
+        private void Add()
+        {
+            ObservableRangeCollection<Days> ds = new ObservableRangeCollection<Days>();
+            ds.Add(new Days { Day = 1 });
+            ds.Add(new Days { Day = 2 });
+            ds.Add(new Days { Day = 3 });
+            _namesList.Add(new WeeksList { days = ds });
         }
 
         public void AddWeek()

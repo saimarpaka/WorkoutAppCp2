@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using MvvmHelpers;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -17,10 +18,10 @@ namespace WorkoutAppCp2.ViewModels
         public IWorkoutRepository _workoutRepository;
         public IWorkoutWeeksRepository _workoutWeeksrepository;
         public IWorkoutDaysRepository _workoutDaysRepository;
-        public List<WeeksList> _namesList;
+        public ObservableRangeCollection<WeeksList> _namesList;
         public ObservableCollection<WeeksList> _slWeeks;
 
-        public List<WeeksList> NamesList
+        public ObservableRangeCollection<WeeksList> NamesList
         {
             get => _namesList;
             set
