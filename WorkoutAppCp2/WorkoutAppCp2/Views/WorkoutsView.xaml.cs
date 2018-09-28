@@ -11,6 +11,11 @@ namespace WorkoutAppCp2.Views
         {
             InitializeComponent();
             BindingContext = new WorkoutDetailsViewModel();
+            MessagingCenter.Subscribe<Button,string>("Scroll","ScrollTo" ,(sender, arg) =>
+            {
+                sv.FadeTo(1, 200, Easing.CubicIn);
+                sv.ScrollToAsync(sender, 0, false);
+            });
         }
     }
 }

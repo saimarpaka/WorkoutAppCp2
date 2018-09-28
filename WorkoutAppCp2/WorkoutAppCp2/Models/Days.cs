@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using MvvmHelpers;
 
 namespace WorkoutAppCp2.Models
 {
     public class Days
     {
         public int Day { get; set; }
-        public List<ExercisesOnDay> exercisesOnDays = new List<ExercisesOnDay>();
+        public ObservableRangeCollection<ExercisesOnDay> exercisesOnDays { get; set; }
     }
 }

@@ -2,8 +2,8 @@
 {
     public class ExercisesOnDay
     {
-        public int ExerciseId { get; set; }
-        public int Sets { get; set; }
-        public int Reps { get; set; }
+        public string ExerciseId { get; set; }
+        public string Sets { get; set; }
+        public string Reps { get; set; }
     }
 }

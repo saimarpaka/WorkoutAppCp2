@@ -5,41 +5,60 @@
              x:Class="WorkoutAppCp2.Views.WorkoutsView"
              x:Name="RootPage">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView x:Name="sv">
             <StackLayout>
                 <controls:RepeaterView ItemsSource="{Binding NamesList}" Spacing="10" Padding="6">
                     <controls:RepeaterView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <controls:CardView HasShadow="True">
-                                <StackLayout>
-                                    
+
+                                    <StackLayout>
+                                        <Label Text="{Binding Week, StringFormat='Week {0:#}'}}" FontSize="Medium"></Label>
                                         <controls:RepeaterView ItemsSource="{Binding days}" Spacing="10" Padding="6">
                                             <controls:RepeaterView.ItemTemplate>
                                                 <DataTemplate>
                                                     <ViewCell>
-                                                        <StackLayout>
-                                                            <controls:CardView BackgroundColor="#f2f4f5" HasShadow="True">
-                                                                <Label Text="{Binding Day}"></Label>
-                                                            </controls:CardView>
-                                                        </StackLayout>
+                                                        <controls:CardView BackgroundColor="#f2f4f5" HasShadow="True">
+                                                            <StackLayout>
 
+                                                                <Label Text="{Binding Day, StringFormat='Day {0:#}'}}" FontSize="Medium"></Label>
+
+                                                                <controls:RepeaterView ItemsSource="{Binding exercisesOnDays}" Spacing="10" Padding="6">
+                                                                    <controls:RepeaterView.ItemTemplate>
+                                                                        <DataTemplate>
+                                                                            <ViewCell>
+                                                                                <Grid>
+                                                                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding ExerciseId}" Placeholder="Exercise"></Entry>
+                                                                                    <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Sets}" Placeholder="Sets"></Entry>
+                                                                                    <Entry Grid.Row="0" Grid.Column="2" Text="{Binding Reps}" Placeholder="Reps"></Entry>
+                                                                                </Grid>
+                                                                            </ViewCell>
+                                                                        </DataTemplate>
+                                                                    </controls:RepeaterView.ItemTemplate>
+                                                                </controls:RepeaterView>
+
+                                                                <Button Text="Add" Command="{Binding Path=BindingContext.AddExerciseCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}" WidthRequest="50" HeightRequest="40"
+                                                                        FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
+                                                            </StackLayout>
+                                                        </controls:CardView>
                                                     </ViewCell>
                                                 </DataTemplate>
                                             </controls:RepeaterView.ItemTemplate>
                                         </controls:RepeaterView>
 
-
-                                        <Button Text="Add Day" Command="{Binding Path=BindingContext.AddDayCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}" ></Button>
-                                </StackLayout>
+                                        <Button Text="Add" Command="{Binding Path=BindingContext.AddDayCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}"  WidthRequest="50" HeightRequest="40"
+                                                                        FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
+                                    </StackLayout>
                                 </controls:CardView>
                             </ViewCell>
                         </DataTemplate>
-                        
                     </controls:RepeaterView.ItemTemplate>
-                    
                 </controls:RepeaterView>
-                <Button Text=" Click me" Command="{Binding AddCommand}" ></Button>
+                <StackLayout Padding="6,6,6,6">
+                    <Button Text="Add" Command="{Binding AddCommand}"  WidthRequest="70" HeightRequest="50"
+                                                                        FontSize="Micro" HorizontalOptions="Start" VerticalOptions="Center" FontAttributes="Bold" BackgroundColor="#5989B5" TextColor="White"></Button>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
