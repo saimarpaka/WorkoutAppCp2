@@ -5,6 +5,7 @@ namespace WorkoutAppCp2.Models
     [Table("WorkoutDays")]
     public class WorkoutDays
     {
+        [PrimaryKey, AutoIncrement, NotNull, Column("Id")]
         public int Id { get; set; }
         public int Workout_Id { get; set; }
         public int Workout_Week_Id { get; set; }

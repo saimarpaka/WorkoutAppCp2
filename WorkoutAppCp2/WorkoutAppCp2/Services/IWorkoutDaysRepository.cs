@@ -12,7 +12,7 @@ namespace WorkoutAppCp2.Services
 
         Task<WorkoutDays> GetWorkoutDay(int workout_Id, int workout_week_Id, int workout_Day_Id);
 
-        void AddWorkoutDay(WorkoutDays workoutDay);
+        Task<WorkoutDays> AddWorkoutDay(WorkoutDays workoutDay);
 
         void UpdateWorkoutDay(WorkoutDays workoutDay);
        

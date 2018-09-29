@@ -18,6 +18,7 @@ namespace WorkoutAppCp2.ViewModels
         public IWorkoutRepository _workoutRepository;
         public IWorkoutWeeksRepository _workoutWeeksrepository;
         public IWorkoutDaysRepository _workoutDaysRepository;
+        public IExerciseRepository _exerciseRepository;
         public ObservableRangeCollection<WeeksList> _weeksList;
         public ObservableCollection<WeeksList> _slWeeks;
 

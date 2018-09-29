@@ -24,9 +24,9 @@ namespace WorkoutAppCp2.Services
             return _databaseHelper.GetWorkoutDay(workout_Id, workout_week_Id, workout_Day_Id);
         }
 
-        public void AddWorkoutDay(WorkoutDays workoutDay)
+        public Task<WorkoutDays> AddWorkoutDay(WorkoutDays workoutDay)
         {
-            _databaseHelper.AddWorkoutDay(workoutDay);
+            return _databaseHelper.AddWorkoutDay(workoutDay);
         }
 
         public void UpdateWorkoutDay(WorkoutDays workoutDay)

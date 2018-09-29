@@ -73,14 +73,24 @@ namespace WorkoutAppCp2.Helpers
                                                                 && t.Id == workout_Day_Id).FirstOrDefaultAsync();
         }
 
-        public void AddWorkoutDay(WorkoutDays workoutDay)
+        public Task<WorkoutDays> AddWorkoutDay(WorkoutDays workoutDay)
         {
             sqliteconnection.InsertAsync(workoutDay);
+            return sqliteconnection.Table<WorkoutDays>().OrderByDescending(t => t.Id).FirstOrDefaultAsync();
         }
 
         public void UpdateWorkoutDay(WorkoutDays workoutDay)
         {
             sqliteconnection.UpdateAsync(workoutDay);
+        }
+        public Task<Exercises> AddExercise(Exercises exercise)
+        {
+            sqliteconnection.InsertAsync(exercise);
+            return sqliteconnection.Table<Exercises>().OrderByDescending(t => t.Id).FirstOrDefaultAsync();
+        }
+        public Task<List<Exercises>> GetExercises(int dayId)
+        {
+            return sqliteconnection.Table<Exercises>().Where(t => t.Day_Id == dayId).ToListAsync();
         }
     }
 }

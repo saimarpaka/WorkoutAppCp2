@@ -62,13 +62,18 @@ namespace WorkoutAppCp2.ViewModels
         private async Task AddWorkout()
         {
             _workoutDaysRepository = new WorkoutDaysRepository();
+            _exerciseRepository = new ExerciseRepository();
             Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
             foreach (var item in _weeksList)
             {
-                var weekid = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week }).Result;
-                foreach(var item2 in item.days)
+                var weekId = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week }).Result;
+                foreach (var item2 in item.days)
                 {
-                    
+                    var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id }).Result;
+                    foreach (var item3 in item2.exercisesOnDays)
+                    {
+                        await _exerciseRepository.AddExercise(new Exercises { Day_Id = dayId.Id, Exercise_Name = item3.ExerciseId, Sets = item3.Reps, Reps = item3.Reps });
+                    }
                 }
             }
 
