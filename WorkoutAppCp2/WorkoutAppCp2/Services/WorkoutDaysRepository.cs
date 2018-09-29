@@ -14,9 +14,9 @@ namespace WorkoutAppCp2.Services
             _databaseHelper = new DatabaseHelper();
         }
 
-        public Task<List<WorkoutDays>> GetAllWorkoutDays()
+        public Task<List<WorkoutDays>> GetAllWorkoutDays(int workout_week_Id)
         {
-            return _databaseHelper.GetAllWorkoutDays();
+            return _databaseHelper.GetAllWorkoutDays(workout_week_Id);
         }
 
         public Task<WorkoutDays> GetWorkoutDay(int workout_Id, int workout_week_Id, int workout_Day_Id)

@@ -17,6 +17,7 @@ namespace WorkoutAppCp2.Helpers
             sqliteconnection.CreateTableAsync<Workouts>().Wait();
             sqliteconnection.CreateTableAsync<WorkoutWeeks>().Wait();
             sqliteconnection.CreateTableAsync<WorkoutDays>().Wait();
+            sqliteconnection.CreateTableAsync<Exercises>().Wait();
         }
 
         public Task<List<Workouts>> GetAllWorkouts()
@@ -40,9 +41,9 @@ namespace WorkoutAppCp2.Helpers
             sqliteconnection.UpdateAsync(workout);
         }
 
-        public Task<List<WorkoutWeeks>> GetAllWorkoutWeeks()
+        public Task<List<WorkoutWeeks>> GetAllWorkoutWeeks(int workout_Id)
         {
-            return sqliteconnection.Table<WorkoutWeeks>().ToListAsync();
+            return sqliteconnection.Table<WorkoutWeeks>().Where(t => t.Workout_Id == workout_Id).ToListAsync();
         }
 
         public Task<WorkoutWeeks> GetWorkoutWeek(int workout_Id)
@@ -61,9 +62,9 @@ namespace WorkoutAppCp2.Helpers
             sqliteconnection.UpdateAsync(workoutWeek);
         }
 
-        public Task<List<WorkoutDays>> GetAllWorkoutDays()
+        public Task<List<WorkoutDays>> GetAllWorkoutDays(int workout_week_Id)
         {
-            return sqliteconnection.Table<WorkoutDays>().ToListAsync();
+            return sqliteconnection.Table<WorkoutDays>().Where(t=>t.Workout_Week_Id == workout_week_Id).ToListAsync();
         }
 
         public Task<WorkoutDays> GetWorkoutDay(int workout_Id, int workout_week_Id, int workout_Day_Id)

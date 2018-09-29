@@ -1,6 +1,5 @@
 ﻿using MvvmHelpers;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WorkoutAppCp2.Models;
@@ -11,8 +10,6 @@ namespace WorkoutAppCp2.ViewModels
 {
     internal class BaseWorkoutsViewModel : INotifyPropertyChanged
     {
-        public WorkoutDays _workoutDays;
-        public WorkoutWeeks _workoutWeeks;
         public Workouts _workout;
         public INavigation _navigation;
         public IWorkoutRepository _workoutRepository;
@@ -20,7 +17,18 @@ namespace WorkoutAppCp2.ViewModels
         public IWorkoutDaysRepository _workoutDaysRepository;
         public IExerciseRepository _exerciseRepository;
         public ObservableRangeCollection<WeeksList> _weeksList;
-        public ObservableCollection<WeeksList> _slWeeks;
+
+        private bool _bEnableWorkoutEdit;
+
+        public bool bEnableWorkoutEdit
+        {
+            get { return _bEnableWorkoutEdit; }
+            set
+            {
+                _bEnableWorkoutEdit = value;
+                NotifyPropertyChanged("bEnableWorkoutEdit");
+            }
+        }
 
         public ObservableRangeCollection<WeeksList> NamesList
         {
@@ -29,15 +37,6 @@ namespace WorkoutAppCp2.ViewModels
             {
                 _weeksList = value;
                 NotifyPropertyChanged("NamesList");
-            }
-        }
-        public ObservableCollection<WeeksList> SlWeeks
-        {
-            get => _slWeeks;
-            set
-            {
-                _slWeeks = value;
-                NotifyPropertyChanged("SlWeeks");
             }
         }
 
@@ -51,56 +50,6 @@ namespace WorkoutAppCp2.ViewModels
             }
         }
 
-        public int Week
-        {
-            get => _workoutWeeks.Week;
-            set
-            {
-                _workoutWeeks.Week = value;
-                NotifyPropertyChanged("Week");
-            }
-        }
-
-        public int Day
-        {
-            get => _workoutWeeks.Day;
-            set
-            {
-                _workoutWeeks.Day = value;
-                NotifyPropertyChanged("Day");
-            }
-        }
-
-        public string Exercise_Id
-        {
-            get => _workoutDays.Exercise_Id;
-            set
-            {
-                _workoutDays.Exercise_Id = value;
-                NotifyPropertyChanged("Exercise_Id");
-            }
-        }
-
-        public string Sets
-        {
-            get => _workoutDays.Sets;
-            set
-            {
-                _workoutDays.Sets = value;
-                NotifyPropertyChanged("Sets");
-            }
-        }
-
-        public string Reps
-        {
-            get => _workoutDays.Reps;
-            set
-            {
-                _workoutDays.Reps = value;
-                NotifyPropertyChanged("Reps");
-            }
-        }
-
         private List<Workouts> _workoutsList;
 
         public List<Workouts> WorkoutsList
@@ -110,30 +59,6 @@ namespace WorkoutAppCp2.ViewModels
             {
                 _workoutsList = value;
                 NotifyPropertyChanged("WorkoutsList");
-            }
-        }
-
-        private List<WorkoutWeeks> _workoutWeeksList;
-
-        public List<WorkoutWeeks> WorkoutWeeksList
-        {
-            get => _workoutWeeksList;
-            set
-            {
-                _workoutWeeksList = value;
-                NotifyPropertyChanged("WorkoutWeeksList");
-            }
-        }
-
-        private List<WorkoutWeeks> _workoutDaysList;
-
-        public List<WorkoutWeeks> WorkoutDaysList
-        {
-            get => _workoutDaysList;
-            set
-            {
-                _workoutDaysList = value;
-                NotifyPropertyChanged("WorkoutDaysList");
             }
         }
 

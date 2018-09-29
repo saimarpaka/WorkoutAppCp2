@@ -8,7 +8,7 @@ namespace WorkoutAppCp2.Services
 {
     interface IWorkoutDaysRepository
     {
-        Task<List<WorkoutDays>> GetAllWorkoutDays();
+        Task<List<WorkoutDays>> GetAllWorkoutDays(int workout_week_Id);
 
         Task<WorkoutDays> GetWorkoutDay(int workout_Id, int workout_week_Id, int workout_Day_Id);
 

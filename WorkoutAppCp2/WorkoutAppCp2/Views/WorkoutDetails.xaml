@@ -3,20 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WorkoutAppCp2.Views"
              x:Class="WorkoutAppCp2.Views.WorkoutDetails">
-    <ContentPage.Content>
-        <StackLayout Padding="20" Spacing="12">
-            <local:AddWorkoutCode/>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>                
-                <Button Text="Delete"  Grid.Row="0" Grid.Column="1" BorderRadius="0" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding DeleteWorkoutCommand}" />
-            </Grid>
-        </StackLayout>
-    </ContentPage.Content>
+  <ContentPage.Content>
+    <StackLayout>
+      <local:WorkoutsView></local:WorkoutsView>
+
+      <StackLayout Padding="6,0,6,0">
+        <Button Text="Delete"  BorderRadius="0" FontAttributes="Bold" TextColor="White" HorizontalOptions="End" VerticalOptions ="Center" BackgroundColor="#5989B5" Command="{Binding DeleteWorkoutCommand}" />
+      </StackLayout>
+    </StackLayout>
+  </ContentPage.Content>
 </ContentPage>

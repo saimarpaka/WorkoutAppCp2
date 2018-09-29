@@ -6,7 +6,7 @@ namespace WorkoutAppCp2.Services
 {
     internal interface IWorkoutWeeksRepository
     {
-        Task<List<WorkoutWeeks>> GetAllWorkoutWeeks();
+        Task<List<WorkoutWeeks>> GetAllWorkoutWeeks(int workout_Id);
 
         Task<WorkoutWeeks> GetWorkoutWeek(int workout_Id);
 

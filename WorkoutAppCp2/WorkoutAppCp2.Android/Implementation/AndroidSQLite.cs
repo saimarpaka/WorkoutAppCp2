@@ -14,6 +14,7 @@ namespace WorkoutAppCp2.Droid.Implementation
             string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal);
 
             var path = Path.Combine(documentsPath, DatabaseHelper.DbFileName);
+            //File.Delete(path);
             var conn = new SQLiteAsyncConnection(path);
 
             return conn;

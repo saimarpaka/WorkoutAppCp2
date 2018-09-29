@@ -14,9 +14,9 @@ namespace WorkoutAppCp2.Services
             _databaseHelper = new DatabaseHelper();
         }
 
-        public Task<List<WorkoutWeeks>> GetAllWorkoutWeeks()
+        public Task<List<WorkoutWeeks>> GetAllWorkoutWeeks(int workout_Id)
         {
-            return _databaseHelper.GetAllWorkoutWeeks();
+            return _databaseHelper.GetAllWorkoutWeeks(workout_Id);
         }
 
         public Task<WorkoutWeeks> GetWorkoutWeek(int workout_Id)
@@ -24,9 +24,9 @@ namespace WorkoutAppCp2.Services
             return _databaseHelper.GetWorkoutWeek(workout_Id);
         }
 
-        public void AddWorkoutWeek(WorkoutWeeks workoutWeek)
+        public Task<WorkoutWeeks> AddWorkoutWeek(WorkoutWeeks workoutWeek)
         {
-            _databaseHelper.AddWorkoutWeek(workoutWeek);
+            return _databaseHelper.AddWorkoutWeek(workoutWeek);
         }
 
         public void UpdateWorkoutWeek(WorkoutWeeks workoutWeek)

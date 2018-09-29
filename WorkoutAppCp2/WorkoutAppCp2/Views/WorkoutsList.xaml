@@ -26,7 +26,7 @@
                         <ViewCell>
                             <StackLayout Padding="6" Spacing="10" Orientation="Vertical">
                                 <local:CardView  HasShadow="True" >
-                                    <StackLayout Margin="10,10,10,10" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
+                                    <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                                                  BackgroundColor="White">
                                         <Label Text="{Binding Workout_Name}" Font="20" TextColor="Black"  />
                                     </StackLayout>
