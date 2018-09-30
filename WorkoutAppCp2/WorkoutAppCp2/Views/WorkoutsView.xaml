@@ -12,7 +12,7 @@
                     <controls:CardView HasShadow="True">
                         <Grid>
                             <Label Grid.Row="0" Grid.Column="0" Text="Workout Name" VerticalTextAlignment="Center" HorizontalOptions="Start"></Label>
-                            <Entry Text="{Binding Workout_Name}" HorizontalOptions="End" Grid.Row="0" Grid.Column="1" Placeholder="Workout Name" IsEnabled="{Binding bEnableWorkoutEdit}" TextColor="Black"></Entry>
+                            <controls:CustomEntry Text="{Binding Workout_Name}" HorizontalOptions="End" Grid.Row="0" Grid.Column="1" Placeholder="Workout Name" IsEnabled="{Binding bEnableWorkoutEdit}" TextColor="Black"></controls:CustomEntry>
                         </Grid>
                     </controls:CardView>
                 </StackLayout>
@@ -38,9 +38,9 @@
                                                                         <DataTemplate>
                                                                             <ViewCell>
                                                                                 <Grid>
-                                                                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding ExerciseId}" Placeholder="Exercise" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></Entry>
-                                                                                    <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Sets}" Placeholder="Sets" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></Entry>
-                                                                                    <Entry Grid.Row="0" Grid.Column="2" Text="{Binding Reps}" Placeholder="Reps" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></Entry>
+                                                                                    <controls:CustomEntry Grid.Row="0" Grid.Column="0" Text="{Binding ExerciseId}" Placeholder="Exercise" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></controls:CustomEntry>
+                                                                                    <controls:CustomEntry Grid.Row="0" Grid.Column="1" Text="{Binding Sets}" Placeholder="Sets" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></controls:CustomEntry>
+                                                                                    <controls:CustomEntry Grid.Row="0" Grid.Column="2" Text="{Binding Reps}" Placeholder="Reps" IsEnabled="{Binding BindingContext.bEnableWorkoutEdit, Source={x:Reference RootPage}}"></controls:CustomEntry>
                                                                                 </Grid>
                                                                             </ViewCell>
                                                                         </DataTemplate>

@@ -73,10 +73,10 @@ namespace WorkoutAppCp2.ViewModels
 
         private async Task DeleteWorkout()
         {
-            bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workout Details", "Delete Workout Details?", "OK", "Cancel");
+            bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Confirmation", "Delete Workout?", "OK", "Cancel");
             if (isUserAccept)
             {
-                //   _workoutRepository.DeleteWorkout(_workout.Workout_id);
+                _workoutRepository.DeleteWorkout(_workout.Workout_id);
                 await _navigation.PopAsync();
             }
         }

@@ -13,5 +13,7 @@ namespace WorkoutAppCp2.Services
         Task<Workouts> AddWorkout(Workouts workout);
 
         void UpdateWorkout(Workouts workout);
+
+        void DeleteWorkout(int Workout_Id);
     }
 }

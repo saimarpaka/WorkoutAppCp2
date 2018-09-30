@@ -19,16 +19,16 @@
                 </Grid.ColumnDefinitions>
                 <Button Text="New Workout" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10"   FontAttributes="Bold" BorderRadius="0" HeightRequest="40"  BackgroundColor="#5989B5" BorderWidth="1" TextColor="White"  Command="{Binding AddNewWorkoutCommand}" />
             </Grid>
-            <ListView x:Name="WorkoutsListView" HasUnevenRows="true" Grid.Row="1" SeparatorColor="Transparent" ItemsSource="{Binding WorkoutsList}"  
+            <ListView x:Name="WorkoutsListView" HasUnevenRows="true" Grid.Row="1" SeparatorColor="Transparent" ItemsSource="{Binding WorkoutsList}"
          SelectedItem="{Binding SelectedWorkout, Mode=TwoWay}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="6" Spacing="10" Orientation="Vertical">
-                                <local:CardView  HasShadow="True" >
+                                <local:CardView  HasShadow="True">
                                     <StackLayout  HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"
                                                  BackgroundColor="White">
-                                        <Label Text="{Binding Workout_Name}" Font="20" TextColor="Black"  />
+                                        <Label Text="{Binding Workout_Name}" Font="20" TextColor="Black" />
                                     </StackLayout>
                                 </local:CardView>
                             </StackLayout>
@@ -36,7 +36,6 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Delete All Workouts" Grid.Row="2" BorderRadius="0" VerticalOptions="EndAndExpand" FontAttributes="Bold" TextColor="White" BackgroundColor="#5989B5" Command="{Binding DeleteAllWorkoutsCommand}" />
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -9,6 +9,7 @@ namespace WorkoutAppCp2.Services
     {
         private DatabaseHelper _databaseHelper;
 
+       
         public WorkoutRepository()
         {
             _databaseHelper = new DatabaseHelper();
@@ -32,6 +33,10 @@ namespace WorkoutAppCp2.Services
         public void UpdateWorkout(Workouts workout)
         {
             _databaseHelper.UpdateWorkout(workout);
+        }
+        public void DeleteWorkout(int Workout_Id)
+        {
+            _databaseHelper.DeleteWorkout(Workout_Id);
         }
     }
 }

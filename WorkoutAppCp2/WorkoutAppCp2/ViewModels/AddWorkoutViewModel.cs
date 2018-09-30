@@ -72,11 +72,11 @@ namespace WorkoutAppCp2.ViewModels
 
                 foreach (var item2 in item.days)
                 {
-                    var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id }).Result;
+                    var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id, Workout_Id = oLastWorkout.Workout_id }).Result;
 
                     foreach (var item3 in item2.exercisesOnDays)
                     {
-                        await _exerciseRepository.AddExercise(new Exercises { Day_Id = dayId.Id, Exercise_Name = item3.ExerciseId, Sets = item3.Reps, Reps = item3.Reps });
+                        await _exerciseRepository.AddExercise(new Exercises { Day_Id = dayId.Id, Exercise_Name = item3.ExerciseId, Sets = item3.Reps, Reps = item3.Reps, Workout_Id = oLastWorkout.Workout_id });
                     }
                 }
             }

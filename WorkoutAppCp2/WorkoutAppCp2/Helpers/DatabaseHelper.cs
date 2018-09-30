@@ -35,7 +35,13 @@ namespace WorkoutAppCp2.Helpers
             sqliteconnection.InsertAsync(workout);
             return sqliteconnection.Table<Workouts>().OrderByDescending(t => t.Workout_id).FirstOrDefaultAsync();
         }
-
+        public void DeleteWorkout(int Workout_Id)
+        {
+            sqliteconnection.DeleteAsync(new Workouts { Workout_id = Workout_Id });
+            sqliteconnection.DeleteAsync(new WorkoutWeeks { Workout_Id = Workout_Id });
+            sqliteconnection.DeleteAsync(new WorkoutDays { Workout_Id = Workout_Id });
+            sqliteconnection.DeleteAsync(new Exercises { Workout_Id = Workout_Id });
+        }
         public void UpdateWorkout(Workouts workout)
         {
             sqliteconnection.UpdateAsync(workout);
