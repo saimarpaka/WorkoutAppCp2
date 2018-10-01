@@ -34,7 +34,7 @@
                                                             <StackLayout>
 
                                                                 <Label Text="{Binding Day, StringFormat='Day {0:#}'}}" FontSize="Medium"></Label>
-                                                                <Grid  Padding="6">
+                                                                <Grid  Padding="8">
                                                                     <Label Text="Exercise" Grid.Row="0" Grid.Column="0" FontSize="Medium"></Label>
                                                                     <Label Text="Sets" Grid.Row="0" Grid.Column="1" FontSize="Medium"></Label>
                                                                     <Label Text="Reps" Grid.Row="0" Grid.Column="2" FontSize="Medium"></Label>
