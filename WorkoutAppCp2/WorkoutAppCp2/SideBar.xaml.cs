@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +11,7 @@ namespace WorkoutAppCp2
         public SideBar()
         {
             InitializeComponent();
+            
             MasterPage.ListView.ItemSelected += ListView_ItemSelected;
         }
 
@@ -25,8 +22,12 @@ namespace WorkoutAppCp2
 
             var page = (Page)Activator.CreateInstance(item.TargetType);
             page.Title = item.Title;
+            var nav = new NavigationPage(page);
+            nav.BarBackgroundColor = Color.FromHex("#7635EB");
+            nav.BarTextColor = Color.White;
 
-            Detail = new NavigationPage(page);
+            Detail = nav;
+
             IsPresented = false;
 
             MasterPage.ListView.SelectedItem = null;

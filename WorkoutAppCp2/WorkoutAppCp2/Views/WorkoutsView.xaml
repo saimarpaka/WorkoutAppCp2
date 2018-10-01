@@ -24,7 +24,9 @@
 
                                     <StackLayout>
                                         <Label Text="{Binding Week, StringFormat='Week {0:#}'}}" FontSize="Medium"></Label>
+
                                         <controls:RepeaterView ItemsSource="{Binding days}" Spacing="10" Padding="6">
+
                                             <controls:RepeaterView.ItemTemplate>
                                                 <DataTemplate>
                                                     <ViewCell>
@@ -32,7 +34,11 @@
                                                             <StackLayout>
 
                                                                 <Label Text="{Binding Day, StringFormat='Day {0:#}'}}" FontSize="Medium"></Label>
-
+                                                                <Grid  Padding="6">
+                                                                    <Label Text="Exercise" Grid.Row="0" Grid.Column="0" FontSize="Medium"></Label>
+                                                                    <Label Text="Sets" Grid.Row="0" Grid.Column="1" FontSize="Medium"></Label>
+                                                                    <Label Text="Reps" Grid.Row="0" Grid.Column="2" FontSize="Medium"></Label>
+                                                                </Grid>
                                                                 <controls:RepeaterView ItemsSource="{Binding exercisesOnDays}" Spacing="10" Padding="6">
                                                                     <controls:RepeaterView.ItemTemplate>
                                                                         <DataTemplate>
