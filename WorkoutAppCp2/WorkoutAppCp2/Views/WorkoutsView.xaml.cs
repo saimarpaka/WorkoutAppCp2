@@ -22,8 +22,8 @@ namespace WorkoutAppCp2.Views
 
         private void ScrollTo(Button sender)
         {
-            sv.FadeTo(1, 200, Easing.CubicIn);
-            sv.ScrollToAsync(sender, 0, false);
+            //sv.FadeTo(1, 1000, Easing.CubicIn);
+            sv.ScrollToAsync(sender, ScrollToPosition.MakeVisible, true);
         }
     }
 }
