@@ -1,5 +1,6 @@
 ﻿using SQLite;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using WorkoutAppCp2.Models;
 using Xamarin.Forms;
@@ -22,6 +23,7 @@ namespace WorkoutAppCp2.Helpers
 
         public Task<List<Workouts>> GetAllWorkouts()
         {
+            
             return sqliteconnection.Table<Workouts>().OrderBy(t => t.Workout_id).ToListAsync();
         }
 

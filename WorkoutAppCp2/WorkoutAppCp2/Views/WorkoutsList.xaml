@@ -2,28 +2,55 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:WorkoutAppCp2.Controls"
+             xmlns:sync="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
              x:Class="WorkoutAppCp2.Views.WorkoutsList"
              BackgroundColor="#F5F5F5"
-             Title="Workouts">
+             Title="Workouts"
+             x:Name="RootPage">
     <ContentPage.Content>
 
         <Grid Padding="10">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button Text="Delete" Grid.Row="0" Grid.Column="0" Margin="10,10,10,10"   FontAttributes="Bold" BorderRadius="0" HeightRequest="40"  BackgroundColor="#5989B5" BorderWidth="1" TextColor="White"  Command="{Binding AddNewWorkoutCommand}" />
                 <Button Text="New Workout" Grid.Row="0" Grid.Column="1" Margin="10,10,10,10"   FontAttributes="Bold" BorderRadius="0" HeightRequest="40"  BackgroundColor="#5989B5" BorderWidth="1" TextColor="White"  Command="{Binding AddNewWorkoutCommand}" />
             </Grid>
-            <ListView x:Name="WorkoutsListView" HasUnevenRows="true" Grid.Row="1" SeparatorColor="Transparent" ItemsSource="{Binding WorkoutsList}"
-         SelectedItem="{Binding SelectedWorkout, Mode=TwoWay}">
-                <ListView.ItemTemplate>
+
+            <sync:SfListView IsScrollBarVisible="False" ItemsSource="{Binding WorkoutsList}"  Grid.Row="1"  AllowSwiping="True" SelectedItem="{Binding SelectedWorkout, Mode=TwoWay}">
+                <sync:SfListView.ItemSize>
+                    <OnIdiom x:TypeArguments="x:Double"
+                      Phone="80"
+                      Tablet="100"
+                      Desktop="110" />
+                </sync:SfListView.ItemSize>
+                <sync:SfListView.SwipeOffset>
+                    <OnIdiom x:TypeArguments="x:Double" Phone="40" Tablet="200" Desktop="200" />
+                </sync:SfListView.SwipeOffset>
+                <sync:SfListView.SwipeThreshold>
+                    <OnIdiom x:TypeArguments="x:Double" Phone="30" Tablet="100" Desktop="100" />
+                </sync:SfListView.SwipeThreshold>
+
+                <sync:SfListView.RightSwipeTemplate>
+                    <DataTemplate x:Name="RightSwipeTemplate">
+                        <Grid BackgroundColor="Transparent" HorizontalOptions="Fill" VerticalOptions="Fill">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding Path=BindingContext.DeleteWorkoutCommand, Source={x:Reference RootPage}}" CommandParameter="{Binding .}" />
+                            </Grid.GestureRecognizers>
+                            <Grid VerticalOptions="Center" HorizontalOptions="Center">
+                                <Image x:Name="deleteImage" Source="icontrash.png" Grid.Column="0" Grid.Row="0"  BackgroundColor="Transparent"
+                                         HeightRequest="28"
+                                         WidthRequest="28"></Image>
+                            </Grid>
+                        </Grid>
+                    </DataTemplate>
+                </sync:SfListView.RightSwipeTemplate>
+                <sync:SfListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
                             <StackLayout Padding="6" Spacing="10" Orientation="Vertical">
@@ -36,8 +63,8 @@
                             </StackLayout>
                         </ViewCell>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </sync:SfListView.ItemTemplate>
+            </sync:SfListView>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

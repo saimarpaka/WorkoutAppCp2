@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.ObjectModel;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using WorkoutAppCp2.Models;
 using WorkoutAppCp2.ViewModels;
@@ -9,6 +10,7 @@ namespace WorkoutAppCp2.Services
 {
     internal class WorkoutsListViewModel : BaseWorkoutsViewModel
     {
+        public ICommand DeleteWorkoutCommand { get; private set; }
         public ICommand AddNewWorkoutCommand { get; private set; }
         public ICommand DeleteAllWorkoutsCommand { get; private set; }
 
@@ -18,12 +20,16 @@ namespace WorkoutAppCp2.Services
             _workoutRepository = new WorkoutRepository();
             AddNewWorkoutCommand = new Command(async () => await ShowAddWorkout());
             DeleteAllWorkoutsCommand = new Command(async () => await DeleteAllWorkouts());
+            DeleteWorkoutCommand = new Command<Workouts>((model) => DeleteWorkout(model));
             FetchWorkouts();
         }
 
-        private void FetchWorkouts()
+        private async Task FetchWorkouts()
         {
-            WorkoutsList = _workoutRepository.GetAllWorkouts().Result;
+            await Task.Run(() =>
+            {
+                WorkoutsList = new ObservableCollection<Workouts>(_workoutRepository.GetAllWorkouts().Result);
+            });
         }
 
         private async Task ShowAddWorkout()
@@ -60,6 +66,12 @@ namespace WorkoutAppCp2.Services
         private async void ShowWorkoutDetails(int Workout_id)
         {
             await _navigation.PushAsync(new WorkoutDetails(Workout_id));
+        }
+
+        private void DeleteWorkout(Workouts workout)
+        {
+            _workoutRepository.DeleteWorkout(workout.Workout_id);
+            WorkoutsList.Remove(workout);
         }
     }
 }

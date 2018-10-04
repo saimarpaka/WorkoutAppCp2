@@ -10,7 +10,6 @@ namespace WorkoutAppCp2.ViewModels
     internal class AddWorkoutViewModel : BaseWorkoutsViewModel
     {
         public ICommand AddWorkoutCommand { get; private set; }
-        public ICommand ViewAllWorkoutsCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
         public ICommand AddDayCommand { get; private set; }
         public ICommand AddExerciseCommand { get; private set; }
@@ -20,11 +19,9 @@ namespace WorkoutAppCp2.ViewModels
             _navigation = navigation;
             _workout = new Workouts();
 
-            _workoutRepository = new WorkoutRepository();
             _weeksList = new ObservableRangeCollection<WeeksList>();
 
             AddWorkoutCommand = new Command(async () => await AddWorkout());
-            ViewAllWorkoutsCommand = new Command(async () => await ShowWorkoutsList());
             AddCommand = new Command(() => Add());
             AddDayCommand = new Command<WeeksList>((model) => AddDay(model));
             AddExerciseCommand = new Command<DaysInWeek>((model) => AddExercise(model));
@@ -53,35 +50,39 @@ namespace WorkoutAppCp2.ViewModels
             MessagingCenter.Send("Scroll", "ScrollTo", "AddWeek");
         }
 
-        private async Task UpdateWorkout()
-        {
-            await _navigation.PopAsync();
-        }
-
         private async Task AddWorkout()
         {
-            _workoutDaysRepository = new WorkoutDaysRepository();
-            _exerciseRepository = new ExerciseRepository();
-            _workoutWeeksrepository = new WorkoutWeeksRepository();
-
-            Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
-
-            foreach (var item in _weeksList)
+            if (_workout.Workout_Name is null)
             {
-                var weekId = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week, Workout_Id = oLastWorkout.Workout_id }).Result;
+                await Application.Current.MainPage.DisplayAlert("Error", "Please Enter the Workout Name", "OK");
+                return;
+            }
+            else
+            {
+                _workoutRepository = new WorkoutRepository();
+                _workoutDaysRepository = new WorkoutDaysRepository();
+                _exerciseRepository = new ExerciseRepository();
+                _workoutWeeksrepository = new WorkoutWeeksRepository();
 
-                foreach (var item2 in item.Days)
+                Workouts oLastWorkout = _workoutRepository.AddWorkout(_workout).Result;
+
+                foreach (var item in _weeksList)
                 {
-                    var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id, Workout_Id = oLastWorkout.Workout_id }).Result;
+                    var weekId = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week, Workout_Id = oLastWorkout.Workout_id }).Result;
 
-                    foreach (var item3 in item2.exercisesOnDays)
+                    foreach (var item2 in item.Days)
                     {
-                        await _exerciseRepository.AddExercise(new Exercises { Day_Id = dayId.Id, Exercise_Name = item3.ExerciseId, Sets = item3.Reps, Reps = item3.Reps, Workout_Id = oLastWorkout.Workout_id });
+                        var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id, Workout_Id = oLastWorkout.Workout_id }).Result;
+
+                        foreach (var item3 in item2.exercisesOnDays)
+                        {
+                            await _exerciseRepository.AddExercise(new Exercises { Day_Id = dayId.Id, Exercise_Name = item3.ExerciseId, Sets = item3.Reps, Reps = item3.Reps, Workout_Id = oLastWorkout.Workout_id });
+                        }
                     }
                 }
-            }
 
-            await _navigation.PopAsync();
+                await _navigation.PopAsync();
+            }
         }
 
         private async Task ShowWorkoutsList()

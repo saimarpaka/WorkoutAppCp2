@@ -1,5 +1,6 @@
 ﻿using MvvmHelpers;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using WorkoutAppCp2.Models;
@@ -50,9 +51,9 @@ namespace WorkoutAppCp2.ViewModels
             }
         }
 
-        private List<Workouts> _workoutsList;
+        private ObservableCollection<Workouts> _workoutsList;
 
-        public List<Workouts> WorkoutsList
+        public ObservableCollection<Workouts> WorkoutsList
         {
             get => _workoutsList;
             set

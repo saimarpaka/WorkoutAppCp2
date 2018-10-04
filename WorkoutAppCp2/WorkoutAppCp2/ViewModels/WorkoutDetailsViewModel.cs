@@ -11,7 +11,6 @@ namespace WorkoutAppCp2.ViewModels
 {
     internal class WorkoutDetailsViewModel : BaseWorkoutsViewModel
     {
-        public ICommand UpdateWorkoutCommand { get; private set; }
         public ICommand DeleteWorkoutCommand { get; private set; }
         public ICommand AddCommand { get; private set; }
         public ICommand AddDayCommand { get; private set; }
@@ -26,12 +25,8 @@ namespace WorkoutAppCp2.ViewModels
                 Workout_id = selectedWorkoutId
             };
 
-            _workoutRepository = new WorkoutRepository();
-            _workoutWeeksrepository = new WorkoutWeeksRepository();
-            _workoutDaysRepository = new WorkoutDaysRepository();
-            _exerciseRepository = new ExerciseRepository();
             _weeksList = new ObservableRangeCollection<WeeksList>();
-            UpdateWorkoutCommand = new Command(async () => await UpdateWorkout());
+
             DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
             bEnableWorkoutEdit = false;
             FetchWorkoutDetails();
@@ -39,6 +34,11 @@ namespace WorkoutAppCp2.ViewModels
 
         private void FetchWorkoutDetails()
         {
+            _workoutRepository = new WorkoutRepository();
+            _workoutWeeksrepository = new WorkoutWeeksRepository();
+            _workoutDaysRepository = new WorkoutDaysRepository();
+            _exerciseRepository = new ExerciseRepository();
+
             _workout = _workoutRepository.GetWorkout(_workout.Workout_id).Result;
             List<WorkoutWeeks> weeks = _workoutWeeksrepository.GetAllWorkoutWeeks(_workout.Workout_id).Result;
 
@@ -62,13 +62,6 @@ namespace WorkoutAppCp2.ViewModels
 
                 _weeksList.Add(addWeek);
             }
-        }
-
-        private async Task UpdateWorkout()
-        {
-            _workoutDaysRepository = new WorkoutDaysRepository();
-
-            await _navigation.PopAsync();
         }
 
         private async Task DeleteWorkout()
