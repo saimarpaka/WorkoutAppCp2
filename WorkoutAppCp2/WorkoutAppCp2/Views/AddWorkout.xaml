@@ -2,7 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="WorkoutAppCp2.Views.AddWorkout"
-             xmlns:local="clr-namespace:WorkoutAppCp2.Views">
+             xmlns:local="clr-namespace:WorkoutAppCp2.Views"
+             Title="Add Workout">
     <ContentPage.Content>
         <StackLayout>
             <local:WorkoutsView></local:WorkoutsView>

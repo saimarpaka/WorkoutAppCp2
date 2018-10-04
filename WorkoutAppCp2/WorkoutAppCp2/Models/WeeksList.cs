@@ -6,7 +6,7 @@ namespace WorkoutAppCp2.Models
     public class WeeksList
     {
         public int Week { get; set; }
-        public ObservableRangeCollection<Days> days { get; set; }
+        public ObservableRangeCollection<DaysInWeek> Days { get; set; }
 
         public string Day { get; set; }
         public string Exercise_Id { get; set; }

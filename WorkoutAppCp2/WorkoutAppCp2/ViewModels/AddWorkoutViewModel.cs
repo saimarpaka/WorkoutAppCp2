@@ -27,11 +27,11 @@ namespace WorkoutAppCp2.ViewModels
             ViewAllWorkoutsCommand = new Command(async () => await ShowWorkoutsList());
             AddCommand = new Command(() => Add());
             AddDayCommand = new Command<WeeksList>((model) => AddDay(model));
-            AddExerciseCommand = new Command<Days>((model) => AddExercise(model));
+            AddExerciseCommand = new Command<DaysInWeek>((model) => AddExercise(model));
             bEnableWorkoutEdit = true;
         }
 
-        private void AddExercise(Days day)
+        private void AddExercise(DaysInWeek day)
         {
             day.exercisesOnDays.Add(new ExercisesOnDay());
         }
@@ -39,17 +39,17 @@ namespace WorkoutAppCp2.ViewModels
         private void AddDay(WeeksList week)
         {
             ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
-            week.days.Add(new Days { Day = week.days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
+            week.Days.Add(new DaysInWeek { Day = week.Days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
         }
 
         private void Add()
         {
             ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
-            ObservableRangeCollection<Days> ds = new ObservableRangeCollection<Days>
+            ObservableRangeCollection<DaysInWeek> ds = new ObservableRangeCollection<DaysInWeek>
             {
-                new Days { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } }
+                new DaysInWeek { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } }
             };
-            _weeksList.Add(new WeeksList { Week = _weeksList.Count + 1, days = ds });
+            _weeksList.Add(new WeeksList { Week = _weeksList.Count + 1, Days = ds });
             MessagingCenter.Send("Scroll", "ScrollTo", "AddWeek");
         }
 
@@ -70,7 +70,7 @@ namespace WorkoutAppCp2.ViewModels
             {
                 var weekId = _workoutWeeksrepository.AddWorkoutWeek(new WorkoutWeeks { Week = item.Week, Workout_Id = oLastWorkout.Workout_id }).Result;
 
-                foreach (var item2 in item.days)
+                foreach (var item2 in item.Days)
                 {
                     var dayId = _workoutDaysRepository.AddWorkoutDay(new WorkoutDays { Day = item2.Day.ToString(), Workout_Week_Id = weekId.Id, Workout_Id = oLastWorkout.Workout_id }).Result;
 

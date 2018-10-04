@@ -45,11 +45,11 @@ namespace WorkoutAppCp2.ViewModels
             foreach (var week in weeks)
             {
                 WeeksList addWeek = new WeeksList { Week = week.Week };
-                addWeek.days = new ObservableRangeCollection<Days>();
+                addWeek.Days = new ObservableRangeCollection<DaysInWeek>();
                 var daysInWeek = _workoutDaysRepository.GetAllWorkoutDays(week.Id).Result;
                 foreach (var day in daysInWeek)
                 {
-                    Days dayToAdd = new Days { Day = Convert.ToInt32(day.Day) };
+                    DaysInWeek dayToAdd = new DaysInWeek { Day = Convert.ToInt32(day.Day) };
                     dayToAdd.exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay>();
                     var exercisesInDay = _exerciseRepository.GetExercises(day.Id).Result;
 
@@ -57,7 +57,7 @@ namespace WorkoutAppCp2.ViewModels
                     {
                         dayToAdd.exercisesOnDays.Add(new ExercisesOnDay { ExerciseId = exercise.Exercise_Name, Reps = exercise.Reps, Sets = exercise.Sets });
                     }
-                    addWeek.days.Add(dayToAdd);
+                    addWeek.Days.Add(dayToAdd);
                 }
 
                 _weeksList.Add(addWeek);

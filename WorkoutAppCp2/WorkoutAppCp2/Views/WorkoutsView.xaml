@@ -25,7 +25,7 @@
                                     <StackLayout>
                                         <Label Text="{Binding Week, StringFormat='Week {0:#}'}}" FontSize="Medium"></Label>
 
-                                        <controls:RepeaterView ItemsSource="{Binding days}" Spacing="10" Padding="6">
+                                        <controls:RepeaterView ItemsSource="{Binding Days}" Spacing="10" Padding="6">
 
                                             <controls:RepeaterView.ItemTemplate>
                                                 <DataTemplate>
