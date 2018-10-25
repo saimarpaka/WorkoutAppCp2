@@ -10,7 +10,7 @@ namespace WorkoutAppCp2
         public App()
         {
             LiveReload.Init();
-
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzE1NjlAMzEzNjJlMzMyZTMwWE15US8vbUFqZ3dNWVlxMGxXNFd4WEIrSHhzNWxHdUFHa3MwbE5zNUtRaz0=");
             InitializeComponent();
 
             MainPage = new SideBar();
