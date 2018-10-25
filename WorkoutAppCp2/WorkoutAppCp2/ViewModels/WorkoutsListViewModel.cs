@@ -36,7 +36,7 @@ namespace WorkoutAppCp2.Services
         {
             await _navigation.PushAsync(new AddWorkout());
         }
-
+         
         private async Task DeleteAllWorkouts()
         {
             bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workouts List", "Delete All Workouts ?", "OK", "Cancel");

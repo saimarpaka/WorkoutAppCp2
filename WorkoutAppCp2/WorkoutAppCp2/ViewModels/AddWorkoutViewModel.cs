@@ -35,8 +35,15 @@ namespace WorkoutAppCp2.ViewModels
 
         private void AddDay(WeeksList week)
         {
-            ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
-            week.Days.Add(new DaysInWeek { Day = week.Days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
+            if (week.Days.Count is 7)
+            {
+                Application.Current.MainPage.DisplayAlert("Error", "Only 7 Days in a Week.", "OK");
+            }
+            else
+            {
+                ExercisesOnDay exercisesOnDay = new ExercisesOnDay();
+                week.Days.Add(new DaysInWeek { Day = week.Days.Count + 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } });
+            }
         }
 
         private void Add()
@@ -46,6 +53,7 @@ namespace WorkoutAppCp2.ViewModels
             {
                 new DaysInWeek { Day = 1, exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay> { exercisesOnDay } }
             };
+
             _weeksList.Add(new WeeksList { Week = _weeksList.Count + 1, Days = ds });
             MessagingCenter.Send("Scroll", "ScrollTo", "AddWeek");
         }

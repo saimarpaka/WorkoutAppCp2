@@ -14,7 +14,7 @@ namespace WorkoutAppCp2.Views
 
         protected override void OnAppearing()
         {
-            this.BindingContext = new WorkoutsListViewModel(Navigation);
+            BindingContext = new WorkoutsListViewModel(Navigation);
         }
     }
 }
