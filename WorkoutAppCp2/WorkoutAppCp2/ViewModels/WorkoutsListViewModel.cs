@@ -21,22 +21,19 @@ namespace WorkoutAppCp2.Services
             AddNewWorkoutCommand = new Command(async () => await ShowAddWorkout());
             DeleteAllWorkoutsCommand = new Command(async () => await DeleteAllWorkouts());
             DeleteWorkoutCommand = new Command<Workouts>((model) => DeleteWorkout(model));
-            FetchWorkouts();
+            Task.Run(async () => { await FetchWorkouts(); });
         }
 
         private async Task FetchWorkouts()
         {
-            await Task.Run(() =>
-            {
-                WorkoutsList = new ObservableCollection<Workouts>(_workoutRepository.GetAllWorkouts().Result);
-            });
+            WorkoutsList = new ObservableCollection<Workouts>(await _workoutRepository.GetAllWorkouts());
         }
 
         private async Task ShowAddWorkout()
         {
             await _navigation.PushAsync(new AddWorkout());
         }
-         
+
         private async Task DeleteAllWorkouts()
         {
             bool isUserAccept = await Application.Current.MainPage.DisplayAlert("Workouts List", "Delete All Workouts ?", "OK", "Cancel");

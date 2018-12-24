@@ -29,29 +29,29 @@ namespace WorkoutAppCp2.ViewModels
 
             DeleteWorkoutCommand = new Command(async () => await DeleteWorkout());
             bEnableWorkoutEdit = false;
-            FetchWorkoutDetails();
+            Task.Run(async () => { await FetchWorkoutDetails(); });
         }
 
-        private void FetchWorkoutDetails()
+        private async Task FetchWorkoutDetails()
         {
             _workoutRepository = new WorkoutRepository();
             _workoutWeeksrepository = new WorkoutWeeksRepository();
             _workoutDaysRepository = new WorkoutDaysRepository();
             _exerciseRepository = new ExerciseRepository();
 
-            _workout = _workoutRepository.GetWorkout(_workout.Workout_id).Result;
-            List<WorkoutWeeks> weeks = _workoutWeeksrepository.GetAllWorkoutWeeks(_workout.Workout_id).Result;
+            _workout = await _workoutRepository.GetWorkout(_workout.Workout_id);
+            List<WorkoutWeeks> weeks = await _workoutWeeksrepository.GetAllWorkoutWeeks(_workout.Workout_id);
 
             foreach (var week in weeks)
             {
                 WeeksList addWeek = new WeeksList { Week = week.Week };
                 addWeek.Days = new ObservableRangeCollection<DaysInWeek>();
-                var daysInWeek = _workoutDaysRepository.GetAllWorkoutDays(week.Id).Result;
+                var daysInWeek = await _workoutDaysRepository.GetAllWorkoutDays(week.Id);
                 foreach (var day in daysInWeek)
                 {
                     DaysInWeek dayToAdd = new DaysInWeek { Day = Convert.ToInt32(day.Day) };
                     dayToAdd.exercisesOnDays = new ObservableRangeCollection<ExercisesOnDay>();
-                    var exercisesInDay = _exerciseRepository.GetExercises(day.Id).Result;
+                    var exercisesInDay = await _exerciseRepository.GetExercises(day.Id);
 
                     foreach (var exercise in exercisesInDay)
                     {

@@ -1,7 +1,9 @@
 ﻿using SQLite;
 using System.IO;
 using WorkoutAppCp2.Helpers;
+using WorkoutAppCp2.iOS.Implementation;
 
+[assembly: Xamarin.Forms.Dependency(typeof(IOSSQLite))]
 namespace WorkoutAppCp2.iOS.Implementation
 {
     internal class IOSSQLite : ISQLite
